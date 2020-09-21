@@ -1,7 +1,10 @@
 ' This is pure alpha code
-' You MUST change IP address to your hub IP address at send to Hubitat below	
+' You MUST change IP address to your hub IP address	
+
+hubitatHubIp = "http://192.168.0.106:39501/notify"				'///adjust IP address for your system
+
 '///Windows testing: open a command window: winkey + R, enter Cmd, then execute: cscript C:"\apcupsd\etc\apcupsd\smartUPS.vbs ///
-'///Test apcaccess: C:\apcupsd\bin\apcaccess.exe
+'///Testing apcaccess: C:\apcupsd\bin\apcaccess.exe
 '///Comment out the next line when testing, then change back when done. ///
 'On Error Resume Next		'//not needed for stand alone script
 '//	Get information from apsupsd
@@ -44,7 +47,6 @@ strJSONToSend = Left(strJSONToSend, Len(strJSONToSend) - 1) +"}}}"
 'MsgBox strJSONToSend                'write results in a message box
 
 '// send to hubitat
-hubitatHubIp = "http://192.168.0.106:39501/notify"				'///adjust IP address for your system
 Set objXmlHttpMain = CreateObject("Msxml2.ServerXMLHTTP") 
 objXmlHttpMain.open "POST",hubitatHubIp, False 
 objXmlHttpMain.setRequestHeader "Content-Type","text/html"
