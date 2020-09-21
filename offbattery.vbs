@@ -13,7 +13,7 @@ objXmlHttpMain.setRequestHeader "Referer","apcupsd"
 objXmlHttpMain.setRequestHeader "VBReferer","apcupsd"	'///VB refuses to send Referer header, needs the modified version of SmartUPS.groovy
 objXmlHttpMain.setRequestHeader "Connection", "Close"		'///Stop KeepAlive
 objXmlHttpMain.send strJSONToSend
-set objJSONDoc = nothing 
+objXmlHttpMain = nothing 
 set hubitatHubIp = nothing
 set strJSONToSend = nothing
 '/// Exit with a 0 error level to ensure the apccontrol.bat continues ///
