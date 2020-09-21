@@ -12,7 +12,9 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
- *  2020-09-19 V0.0.1 Add support for direct send of VBS scripts from Windows apcupsd eliminating need for a Windows PHP server
+ *  2020-09-21 V0.0.2 Add input setting for using VBS modules in windows 
+ *                            Mostly informational for user, but does not send hub commands on Device refresh			
+ *  2020-09-19 V0.0.1 Add support for direct send of VBS scripts from Windows apcupsd trigger scripts eliminating need for a Windows PHP server
  *                            add log.error when message is not accepted.
  *                            Note VBS wont send Referer header. Accept a VBReferer header
  */
@@ -52,13 +54,18 @@ metadata
 
 	preferences
 	{	
+		section("Use Windows with VBS")
+		{
+			input "globalVBS", "bool", required: true, defaultValue: false,
+				title: "ON: Using VBS with a windows machine without a server. Disables refresh command<br />OFF (Default): Using standard PHP server interface"
+		}
 		section("Device")
 		{
-			input("ip", "string", title:"IP Address", description: "IP Address of the Raspberry Pi", defaultValue: "192.168.7." ,required: true, displayDuringSetup: true)		
+			input("ip", "string", title:"IP Address of apcupsd host system", defaultValue: "192.168.7." ,required: true, displayDuringSetup: true)		
 		}
 		section
 		{
-			input "enableDebug", "bool", title: "Enable debug logging?", description: "Show detailed responses to commands?", defaultValue: false, required: false, multiple: false
+			input "enableDebug", "bool", title: "Enables debug logging for 30 minutes", defaultValue: false, required: false
 		}
 	}
 }
@@ -100,6 +107,8 @@ def reset()
 
 def refresh()
 {
+if (!globalVBS)
+	{		
 	// Initiate local LAN request
 	def hubAction = new hubitat.device.HubAction(
 			method: "GET",
@@ -113,6 +122,7 @@ def refresh()
 		)
 	if (enableDebug) log.debug "Requesting update from APC service... at "
 	sendHubCommand(hubAction)
+	}
 }
 
 
