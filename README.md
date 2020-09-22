@@ -29,10 +29,10 @@ SmartUPS, Windows Centric Version, allows an Hubitat Hub plugged into an APC UPS
 <a name="features"></a>
 ## 2. Features<br />
 
-* Supports apcupsd events: onbattery - mains restored, offbattery - mains down , failing - UPS about to shutdown, and powerout - ?????<br />
-* Device statistics every user defined minutes, using a Windows repeating Scheduled Task<br />
+* Supported events: onbattery - mains restored, offbattery - mains down , failing - UPS about to shutdown, and powerout - ?????<br />
+* Device Statistics: reported every "user defined" minutes, using a repeating Windows Scheduled Task<br />
 * Simplified installation and setup when compared to original version using Windows<br /> 
-* Windows scripts are VBS, a Windows PHP server not used or required<br />
+* Windows modules are VBS, a Windows PHP server is not used or required<br />
 * Executes without being logged in to Windows
 
 [:arrow_up_small: Back to top](#top)
