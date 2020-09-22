@@ -46,43 +46,43 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 <a name="install"></a>
 ## 4. Installation
 
-There are four modules and an optional Keypad Device Handler (DH) associated with this app. Hubitat's Lock Code Manager app may be required. You may also install using the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016)  
+There are five VBS scripts and a one Groovy Device Handler (DH) associated with this app. You may also install he Groovy module using the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016). The VBS scripts must be copied to C:/apcupsd/etc/apcupsd from Github  
  <table style="width:100%">
   <tr>
     <th>Module Name</th>
     <th>Function</th>
-    <th>Required</th>
+    <th>Install Location</th>
   </tr>
   <tr>
-    <td>Nyckelharpa</td>
-    <td>Parent module. Controls HSM forced arming from a keypad, and User pin verification</td>
-    <td>Yes</td>
+    <td>SmartUPS.groovy</td>
+    <td>UPS device handler. Controls communication from UPS to Hub</td>
+    <td>Hubitat Drivers</td>
   </tr>
   <tr>
-    <td>Nyckelharpa Modefix</td>
-    <td>Adjusts HSM mode when HSM State changes, and forced arming from a non keypd source</td>
-    <td>Yes</td>
+    <td>smartUPS.vbs</td>
+    <td>Gets UPS devices statistics and sends information to the Hub, also sends all apcupsd event handler information to the Hub</td>
+    <td>Windows C:apcupsd/etc/apsupsd</td>
   </tr>
   <tr>
-    <td>Nyckelharpa Talker</td>
-    <td>Creates security related output to TTS, speakers, and Notification devices such as: Hubitat Phoneapp and Pushover</td>
-    <td>Optional</td>
+    <td>onbattery.vbs</td>
+    <td>apcupsd onbattery event handler</td>
+    <td>Windows C:apcupsd/etc/apsupsd</td>
+  </tr>  <tr>
+    <td>offbattery.vbs</td>
+    <td>apcupsd offbattery event handler</td>
+    <td>Windows C:apcupsd/etc/apsupsd</td>
   </tr>
   <tr>
-    <td>Nyckelharpa User</td>
-    <td>Maintains User pin codes when using the app's Centralite Keypad DH</td>
-    <td>Optional</td>
+    <td>failing.vbs</td>
+    <td>apcupsd failing event handler</td>
+    <td>Windows C:apcupsd/etc/apsupsd</td>
   </tr>
   <tr>
-    <td>Centralite Keypad</td>
-    <td>Keypad device handler for models: Centralite/Xfinity 3400, Centralite 3400-G, Iris V2, Iris V3, and UEI. Created and converted to HE by Mitch Pond</td>
-    <td>Optional</td>
+    <td>powerout.vbs</td>
+    <td>apcupsd powerout event hanler</td>
+    <td>Windows C:apcupsd/etc/apsupsd</td>
   </tr>
- <tr>
-    <td>Hubitat's Lock Code Manager app</td>
-    <td>Required when using Hubitat keypad drivers, or using Centralitex keypad driver with Lock Code Manager pins</td>
-    <td>Optional</td>
-  </tr></table> 
+</table> 
 
 * https://docs.hubitat.com/index.php?title=How_to_Install_Custom_Apps <br />
 * let's begin by installing the Nyckelharpa parent module into Hubitat (HE) from this Github repository.<br />
