@@ -29,7 +29,7 @@ SmartUPS, Windows Centric Version, allows an Hubitat Hub plugged into an APC UPS
 <a name="features"></a>
 ## 2. Features<br />
 
-* Supported events: onbattery - mains restored, offbattery - mains down , failing - UPS about to shutdown, and powerout - ?????<br />
+* UPS Device Events reported: onbattery - mains restored, offbattery - mains down , failing - UPS about to shutdown, and powerout - ?????<br />
 * Device Statistics: reported every "user defined" minutes, using a repeating Windows Scheduled Task<br />
 * Simplified installation and setup when compared to original version using Windows<br /> 
 * Windows modules are VBS, a Windows PHP server is not used or required<br />
@@ -60,7 +60,7 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 <a name="modules"></a>
 ## 5. SmartUPS Driver and VBS modules
 
-There are five VBS scripts and a one Groovy Device Handler (DH) associated with this app. You may also install he Groovy module using the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016). The VBS scripts must be copied to C:/apcupsd/etc/apcupsd from Github  
+There are five VBS scripts and a one Groovy Device Handler (DH) associated with this app stored in a Github respitory. You may also install he Groovy module using the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016). The VBS scripts must be copied to C:/apcupsd/etc/apcupsd from Github  
  <table style="width:100%">
   <tr>
     <th>Module Name</th>
