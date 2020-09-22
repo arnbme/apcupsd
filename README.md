@@ -8,7 +8,7 @@
 [&ensp;4. Installation Overview](#installOver)<br />
 [&ensp;5. SmartUPS driver and VBS modules](#modules)<br />
 [&ensp;6. Create Virtual Device](#vdevice)<br />
-[&ensp;7. Create a Windows Schedule Task](#windowsTask)<br />
+[&ensp;7. Create a Windows Schedule Task](#windowstask)<br />
 [&ensp;8. Testing](#testing)<br />
 [&ensp;9. Talker messages](#talker)<br />
 [10. Centralitex Keypad Device Handler](#keypadDH)<br />
@@ -136,7 +136,7 @@ Global Settings is reached by: clicking Apps in the menu, then click the Nyckelh
 
 [:arrow_up_small: Back to top](#top)
 
-<a name="windowsTask"></a>
+<a name="windowstask"></a>
 ## 7. Create a Windows Scheduled Task.
 
 Forced Arming is a two step process: An standard initial HSM arming that fails normally, followed by a second arming within 15 seconds that forces HSM to arm. It works from any arming source, including: keypads, locks, dashboards, and the HSM app
@@ -167,7 +167,7 @@ Iris V3-3 beeps old beep then the reject tone, unable to test new beep my device
 5. Notice: Force Arming fails when attempting to arm using the Dashboard Mode. 
   
 [:arrow_up_small: Back to top](#top)
-<a name="tesing"></a>
+<a name="testing"></a>
 ## 8. Testing
 
 Modefix processes HSM armState changes, and optionally sets the Hubitat HSM mode. _It must be created even when the optional mode change data is empty._ 
