@@ -23,41 +23,17 @@
 
 <a name="purpose"></a>
 ## 1. Purpose
-SmartUPS, Windows Version, allowing the HE Hub to gracefuylly shut down during a power outage when it is plugged into an APC UPS using the apcupsd.org's package. This version is maintained by Arn Burkhoff, from Steve Wright's SmartUPS release.
+SmartUPS, Windows Centric Version, allows an HE Hub plugged into an APC UPS, and using apcupsd.org's package on a Windows machine, to gracefully shut down during a power outage. This version is maintained by Arn Burkhoff, and is derived from Steve Wright's SmartUPS release.
 [:arrow_up_small: Back to top](#top)
 
 <a name="features"></a>
 ## 2. Features<br />
 
-* HSM arming when a contact is open, with easy user control<br /> 
-Why is this needed? HSM does not arm the system when arming alerts are implemented, and a contact is open. Examples:<br /><br />It's 1AM, you want to arm the system for night, but a contact is broken.<br /><br />You are away from home, forgot to arm the system, and when you try, oops the back door is open. 
-* Adjusts Hubitat's mode when HSM's arm state changes. (HSM adjusts HSM's arm state when the mode changes)
-* Provides an easy to use security related message control center with output to TTS, Speakers, and Notification devices such as: Hubitat PhoneApp and Pushover
-
-* Keypads: App works with Hubitat keypad drivers, or the user provided Centalitex keypad driver. <b>*However do not mix user and system keypad drivers*</b>
-1. Using Centralitex Keypad driver:<br /><br />
-*Supports Centralite/Xfinity 3400, Centalite 3400-G, Iris V2 and V3, and UEI devices* using a ported version of Mitch Pond's SmartThings Keypad DH, making he keypad function as it did in SmartThings with the SHM Delay App*<br /><br />
-*Pins:<br /> 
-Using Nyckelharpa User pin module: Panic pins, burnable pins aka maximum use count, restricted date and time, and restricted keypad devices<br /> 
-Using Hubitat's Lock Code Manager App Pins: Panic pin by entering case independent text 'panic' any place in field 'Name of this user'*<br /><br />
-*Keys make sounds when tapped*<br /><br />
-*forced arming supported, "Arming forced" message supported*
-
-2. Using Hubitat Keypad drivers:<br /><br /> 
-*Supports Centralite/Xfinity 3400, Centalite 3400-G, Iris V2 and V3 devices*.<br /><br /> 
-*Pins: Only Lock Code Manager pins are supported when using this driver*.<br /><br /> 
-*Generally no sound when keys are tapped*<br /><br /> 
-*Forced Arming supported, cannot create "Arming Forced" notification message*
-
-* Keypad Panic Alerts:
-
-1. Using Centralitex Keypad driver: When the keypad's Panic key is pressed, or a Panic Pin is entered, and there a properly configured active HSM Custom Panic rule<br /> 
-*The system immediately executes the custom HSM rule's alert functions in all arming states, including when HSM is disarmed*
-
-2. Using Hubitat Keypad drivers: When the keypad's Panic key is pressed, and there a properly configured active HSM Custom Panic rule<br /> 
-*The system immediately executes the custom HSM rule's alert functions in all arming states, including when HSM is disarmed. Without Nyckelharpa and it's custom panic rule, HSM does not respond to panic when it is disarmed.*
-
-* Door Chime Function: Use with Keypads and other devices supporting the "beep" command. Optionally issues beep command when system is Disarmed and selected contact sensor opens. Also can optionally issue beep commands when system is armed and Entry Delay begins. Note: the created sound varies by device type, and when using Iris V2/V3 by firmware version.
+* Simplified installation and setup when compared to original version using Windows<br /> 
+* No PHP server required, Windows scripts are VBS<br />
+* Supports apcupsd events: onbattery, offbattery, failing, and powerout<br />
+* Device statistics every user defined minutes, using a Windows repeating Scheduled Task<br />
+* Runs without being logged in to Windows
 
 [:arrow_up_small: Back to top](#top)
 <a name="support"></a>
