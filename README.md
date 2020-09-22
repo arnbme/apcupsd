@@ -23,17 +23,17 @@
 
 <a name="purpose"></a>
 ## 1. Purpose
-SmartUPS, Windows Centric Version, allows an HE Hub plugged into an APC UPS, and using apcupsd.org's package on a Windows machine, to gracefully shut down during a power outage. This version is maintained by Arn Burkhoff, and is derived from Steve Wright's SmartUPS release.
+SmartUPS, Windows Centric Version, allows an Hubitat Hub plugged into an APC UPS, and using apcupsd.org's package on a Windows machine, to gracefully shut down during a power outage. This version is maintained by Arn Burkhoff was derived from Steve Wright's SmartUPS release.
 [:arrow_up_small: Back to top](#top)
 
 <a name="features"></a>
 ## 2. Features<br />
 
-* Simplified installation and setup when compared to original version using Windows<br /> 
-* No PHP server required, Windows scripts are VBS<br />
-* Supports apcupsd events: onbattery, offbattery, failing, and powerout<br />
+* Supports apcupsd events: onbattery - mains restored, offbattery - mains down , failing - UPS about to shutdown, and powerout - ?????<br />
 * Device statistics every user defined minutes, using a Windows repeating Scheduled Task<br />
-* Runs without being logged in to Windows
+* Simplified installation and setup when compared to original version using Windows<br /> 
+* Windows scripts are VBS, a Windows PHP server not used or required<br />
+* Executes without being logged in to Windows
 
 [:arrow_up_small: Back to top](#top)
 <a name="support"></a>
