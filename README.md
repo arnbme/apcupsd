@@ -5,8 +5,8 @@
 [&ensp;1. Purpose](#purpose)<br />
 [&ensp;2. Features](#features)<br />
 [&ensp;3. Donate](#support)<br />
-[&ensp;4. Installation](#install)<br />
-[&ensp;5. Quick Setup Guide](#setup)<br />
+[&ensp;4. Installation Overview](#installOver)<br />
+[&ensp;5. SmartUPS driver and VBS modules](#modules)<br />
 [&ensp;6. Global Settings](#globals)<br />
 [&ensp;7. Forced Arming, Adjust HSM Settings](#adjustHSM)<br />
 [&ensp;8. Modefix Setup and Usage](#modefix)<br />
@@ -43,8 +43,22 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 
 [:arrow_up_small: Back to top](#top)
 
-<a name="install"></a>
-## 4. Installation
+<a name="installOver"></a>
+## 4. Installation Overview
+1. Uninstall APC PowerChute, if installed
+
+2. Connect APC UPS supplied cable to a USB port when necesssary 
+3. Install [apcupds.com app](#modefix) then setup apcupsd
+4. Install module SmartUPS.groovy into Hub Drivers
+5. Create virtual device using SmartUps driver, then set IP address to your Windows machine. Should be a permanently reserved address in roouter 
+6. Copy the five VBS modules to directory C:/apcupsd/etc/apcupsd
+7. Create a Windows Scheduled Task
+8. Reboot Windows system, then test
+
+[:arrow_up_small: Back to top](#top)
+
+<a name="modules"></a>
+## 5. SmartUPS Driver and VBS modules
 
 There are five VBS scripts and a one Groovy Device Handler (DH) associated with this app. You may also install he Groovy module using the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016). The VBS scripts must be copied to C:/apcupsd/etc/apcupsd from Github  
  <table style="width:100%">
@@ -98,18 +112,7 @@ https://docs.hubitat.com/index.php?title=How_to_Install_Custom_Drivers
 *  Next step: Quick Setup Guide
 
 [:arrow_up_small: Back to top](#top)
-<a name="setup"></a>
-## 5. Quick Setup Guide
-Detailed instuctions for each step follow the Quick Setup Guide. Begin by clicking on APPs in the HE menu, then click on Nyckelharpa
-1. Setup [Global Settings](#globals), then click Next, then Done.
 
-2. Setup [Forced Arming, Adjust HSM's settings](#adjustHSM) 
-3. Create [the Required Modefix profile](#modefix)
-4. Optionally create a [Talker profile](#talker)
-5. Optionally set a one or more existing keypad devices to use the user provided [Centralite Driver](#keypadDH), then add one or more [User pin profiles](#userpin)
-6. Optionally enable [HSM Panic](#panicrules) response by creating a Custom HSM Panic Rule 
-
-[:arrow_up_small: Back to top](#top)
 
 <a name="globals"></a>
 ## 6. Global Settings. Includes preparation information needed for Forced HSM Arming.
