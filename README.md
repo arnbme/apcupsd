@@ -1,6 +1,6 @@
 <a name="top"></a>
 # SmartUPS V1 Sep 22, 2020 
-**The Windows Centric Version** 
+# The Windows Centric Version 
 ## Table of Contents 
 [&ensp;1. Purpose](#purpose)<br />
 [&ensp;2. Features](#features)<br />
