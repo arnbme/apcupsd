@@ -12,6 +12,8 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
+ *	The following changes by Arn Burkhoff
+ *  2020-09-22 V0.0.3 Add support for UPS "failing" event, UPS is about to shut down, add attribute lastEvent and store last event status  
  *  2020-09-21 V0.0.2 Add input setting for using VBS modules in windows 
  *                            Mostly informational for user, but does not send hub commands on Device refresh			
  *  2020-09-19 V0.0.1 Add support for direct send of VBS scripts from Windows apcupsd trigger scripts eliminating need for a Windows PHP server
@@ -48,6 +50,7 @@ metadata
 		attribute "lastPowerRestore", "string"
 		attribute "lastPowerFailReason", "string"
 		attribute "batteryRuntime", "string"
+		attribute "lastEvent", "string"
         
 		command "refresh"
 	}
@@ -174,8 +177,10 @@ def updatePowerStatus(status)
 			status == "powerout" ? "battery" : 
 				status == "onbattery" ? "battery" : 
 					status == "offbattery" ? "mains" : 
+						status == "failing" ? "battery" : 
 						"mains"
 
+	sendEvent(name: "lastEvent", value: status,displayed: this.currentLastEvent != lastEvent ? true : false)
 	sendEvent(name: "powerSource", value: powerSource, displayed: this.currentPowerSource != powerSource ? true : false)
     
     if (powerSource == "mains") sendEvent(name: "sessionStatus", value: "stopped", displayed: this.currentSessionStatus != sessionStatus ? true : false)
