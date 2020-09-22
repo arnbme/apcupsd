@@ -7,7 +7,7 @@
 [&ensp;3. Donate](#support)<br />
 [&ensp;4. Installation Overview](#installOver)<br />
 [&ensp;5. SmartUPS driver and VBS modules](#modules)<br />
-[&ensp;6. Global Settings](#globals)<br />
+[&ensp;6. Create Virtual Device](#vdevice)<br />
 [&ensp;7. Forced Arming, Adjust HSM Settings](#adjustHSM)<br />
 [&ensp;8. Modefix Setup and Usage](#modefix)<br />
 [&ensp;9. Talker messages](#talker)<br />
@@ -24,13 +24,14 @@
 <a name="purpose"></a>
 ## 1. Purpose
 SmartUPS, Windows Centric Version, allows an Hubitat Hub plugged into an APC UPS, and using apcupsd.org's package on a Windows machine, to gracefully shut down during a power outage. This version is maintained by Arn Burkhoff was derived from Steve Wright's SmartUPS release.
+
 [:arrow_up_small: Back to top](#top)
 
 <a name="features"></a>
 ## 2. Features<br />
 
-* UPS Device Events reported: onbattery - mains restored, offbattery - mains down , failing - UPS about to shutdown, and powerout - ?????<br />
-* Device Statistics: reported every "user defined" minutes, using a repeating Windows Scheduled Task<br />
+* Reports UPS Device Events: onbattery - mains restored, offbattery - mains down , failing - UPS about to shutdown, and powerout - ?????<br />
+* Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task<br />
 * Simplified installation and setup when compared to original version using Windows<br /> 
 * Windows modules are VBS, a Windows PHP server is not used or required<br />
 * Executes without being logged in to Windows
@@ -49,8 +50,8 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 
 2. Connect APC UPS supplied cable to a USB port when necesssary 
 3. [Install apcupds app](http://www.apcupsd.org), then setup apcupsd
-4. [Install module SmartUPS.groovy](#modules) into Hub Drivers
-5. [Copy the five VBS modules](#modules) to Windows directory C:/apcupsd/etc/apcupsd
+4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers 
+5. [Copy the five VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd
 6. Create a virtual device using SmartUps driver, then set IP address to your Windows machine IP address. This should be a permanently reserved address in router. 
 7. Create a Windows Scheduled Task
 8. Reboot Windows system, then test
@@ -114,8 +115,8 @@ https://docs.hubitat.com/index.php?title=How_to_Install_Custom_Drivers
 [:arrow_up_small: Back to top](#top)
 
 
-<a name="globals"></a>
-## 6. Global Settings. Includes preparation information needed for Forced HSM Arming.
+<a name="vdevice"></a>
+## 6. Create a Virtual Device
 
 Global Settings is reached by: clicking Apps in the menu, then click the Nyckelharpa app, scroll down to Global Settings, then click  "click to show" 
 1. Select all the keypads used for arming HSM
