@@ -10,9 +10,9 @@
 [&ensp;6. Create Virtual Device](#vdevice)<br />
 [&ensp;7. Create a Windows Schedule Task](#windowstask)<br />
 [&ensp;8. Testing](#testing)<br />
-[&ensp;9. Talker messages](#talker)<br />
-[10. Centralitex Keypad Device Handler](#keypadDH)<br />
-[11. User/Pin Profiles with Centralitex driver](#userpin)<br />
+[&ensp;9. Create RM Power Control Rule(s)](#rules)<br />
+[10. Restarting the Hub after a graceful shutdown](#restartHub)<br />
+[11. Restarting the Windows system after a shutdown](#restartWin)<br />
 [12. Lock Code Manager Pins with Centralitex driver](#lcmpin)<br />
 [13. Create Custom HSM Panic Rule](#panicrules)<br />
 [14. Debugging](#testing)<br />
@@ -23,7 +23,7 @@
 
 <a name="purpose"></a>
 ## 1. Purpose
-SmartUPS, Windows Centric Version, allows an Hubitat Hub plugged into an APC UPS, and using apcupsd.org's package on a Windows machine, to gracefully shut down during a power outage. This version is maintained by Arn Burkhoff was derived from Steve Wright's SmartUPS release.
+SmartUPS, Windows Centric Version, allows a Hubitat Hub plugged into an APC UPS, and using apcupsd.org's package on a Windows machine, to gracefully shut down during a power outage. This version is maintained by Arn Burkhoff was derived from Steve Wright's SmartUPS release.
 
 [:arrow_up_small: Back to top](#top)
 
@@ -179,8 +179,8 @@ Modefix processes HSM armState changes, and optionally sets the Hubitat HSM mode
 Caution: improper armState/mode choices, creates havoc with the system.
 
 [:arrow_up_small: Back to top](#top)
-<a name="talker"></a>
-## 9. Talker messages
+<a name="rules"></a>
+## 9. Prepare RM Power Control rule(s)
 
 Table with Reason Issued and Message Issued. 
 * Pin messages, arming canceled, and arming forced, do not allow for text adjustment. 
@@ -269,7 +269,7 @@ Table with Reason Issued and Message Issued.
 
 [:arrow_up_small: Back to top](#top)
 <a name="keypadDH"></a>
-## 10. Centralitex Keypad Device Handler
+## 10. Restarting the Hub after a graceful shutdown
 
 The Centalitex Keypad Device Handler was created by Mitch Pond on SmartThings, where it is still used by a few Smartapps including SHM Delay. With Mitch's assistance and Zigbee skills it was ported to HE, then I added the Alarm capability that sounds a fast high pitch tone until set off on the Iris V2, and beeps for 255 seconds on the Centralite, and the compatabilitty with the Hubitat keypad device drivers, HSM and Lock Code Manager. 
 
@@ -290,8 +290,8 @@ _This DH may be used with the Centralite/Xfinity 3400, Centralite 3400-G, Iris V
 6. When using an Iris V2/V3 keypad set if Partial key creates Home (default) or Night arming mode
 
 [:arrow_up_small: Back to top](#top)
-<a name="userpin"></a>
-## 11. Nyckelharpa User pin profiles with Centralitex Keypad driver 
+<a name="restartWin"></a>
+## 11. Restarting the Windows system after a shutdown
 
 When using the app's keypad Device Handler and User Pin Module
 * For each valid user pin, create a User pin profile
