@@ -1,5 +1,5 @@
 <a name="top"></a>
-# SmartUPS Windows Centric Version 
+# SmartUPS, Windows Centric Version 
 ## Table of Contents 
 [&ensp;1. Purpose](#purpose)<br />
 [&ensp;2. Features](#require)<br />
