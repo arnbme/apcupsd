@@ -22,7 +22,7 @@
 ## 1. Purpose
 **Perform a graceful Hub shutdown when power is lost.** 
 
-Developed for, and tested on a Windows 10 system, but may work on any system supporting Visual Basic Script. 
+Developed for, and tested on a Windows 10 system, but may work on any system supporting apcupsd and Visual Basic Script. 
 
 This version, maintained by Arn Burkhoff, was derived from Steve Wright's APC UPS Monitor Driver release, but does not use or require a PHP server.
 
