@@ -13,10 +13,6 @@
 [&ensp;9. Create RM Power Control Rule(s)](#rules)<br />
 [10. Restarting the Hub after a graceful shutdown](#restartHub)<br />
 [11. Restarting the Windows system after a shutdown](#restartWin)<br />
-[12. Lock Code Manager Pins with Centralitex driver](#lcmpin)<br />
-[13. Create Custom HSM Panic Rule](#panicrules)<br />
-[14. Debugging](#testing)<br />
-[15. Arming From Dashboard](#dboard)<br />
 [16. Uninstalling](#uninstall)<br />
 [17. Get Help, report an issue, or contact information](#help)<br />
 [18. Known Issues](#issues)
@@ -292,64 +288,6 @@ When using the app's keypad Device Handler and User Pin Module
 * *The Iris V3 requires a User profile with pin code 0000, or it will not arm.* It is not accepted for OFF.
 
 * You may define "Panic Pins" designed for use on keypads without a Panic key, but may be used on any keypad
-
-[:arrow_up_small: Back to top](#top)
-<a name="lcmpin"></a>
-## 12. Lock Code Manager pins with Centralitex Keypad driver 
-
-When using the app's keypad Device Handler
-* In the keypad Preferences set "Use Lock Manager Pins" to On/True. If you want to be be able to see the pins for the device set "Enable Lock Manager Code encryption" to Off; tap/click button "Save Preferences"
-
-* Pins may be maintained using the Lock Code Manager app, or device's pin manangement buttons
-
-* A Panic pin is created by by placing case independent text "panic" as part or all of the pin's "Name", allowing a panic response when using a keypad without a Panic key.
-
-[:arrow_up_small: Back to top](#top)
-
-<a name="panicrules"></a>
-## 13. Create Custom HSM Panic Rule
-
-*A custom HSM Rule is required* to force an HSM response to a Panic key press, or Panic pin entry, enabling an instant Panic response even when the system is disarmed
-
-1. Click on Apps-->then click Hubitat Safety Monitor 
-
-2. Click on Custom
-
-3. Click Create New Monitoring Rule --> Name this Custom Monitoring Rule-- enter Panic -->
-
-4. Rule settings
-What kind of device do you want to use: select Contact Sensor<br />
-Select Contact Sensors: *check the Keypad Devices using Centralitex Keypad Driver, and %prfx%-Panic Id device when using HE drivers*, click Update<br />
-What do you want to monitor?: Set Sensor Opens on/true<br />
-For how long? (minutes): must be empty or 0<br />
-Set Alerts for Text, Audio, Siren and Lights<br />
-Click the "Arm This Rule" button<br />
-Click Done
-
-5. *Important: verify the Panic rule is "Armed" or it will not work*
-
-6. Do a Panic test: Press the Iris keypad's Panic button, on Centralite 3400-G simultaneously press both "Police Icon" buttons,  or enter a Panic pin number on Centralite 3400 / UEI.
-
-7. The Panic Alert may be stopped by entering a valid user pin on Centralite / UEI, or a valid pin and OFF on an Iris; or the "Cancel Alerts" button from HE App HSM options
-
-[:arrow_up_small: Back to top](#top)
-<a name="testing"></a>
-## 14. Debugging
-1. No entry delay tones on keypad<br />
-Keypad may be selected as an Optional Alarm device. Remove it as an Alarm device
-
-2. No exit delay tones<br />
-Create and save a Modefix profile
-
-3. Forced arming does not occur<br />
-A user reported the Snapshot app somehow interfered with Nyclelharpa's forced arming, and removing or disabling Snapshot fixed the issue. This does not make sense to me, merely reporting what I was told by the user.
-
-[:arrow_up_small: Back to top](#top)
-<a name="dboard"></a>
-## 15. Arming From Dashboard
-* Always arm and disarm using HSM Status. Forced arming is supported and alert messages are created. 
-
-* Mode will generally work, however when there is an alert, the mode remains in the entered mode, but the HSM Status does not change.
 
 [:arrow_up_small: Back to top](#top)
 
