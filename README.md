@@ -21,7 +21,7 @@
 ## 1. Purpose
 Perform a graceful hub shutdown when power is lost. 
 
-Developed and tested on a Windows 10 system. 
+Developed for, and tested on a Windows 10 system, but may work on any system supporting Visual Basic Script. 
 
 This version, maintained by Arn Burkhoff, was derived from Steve Wright's APC UPS Monitor Driver release.
 
@@ -32,8 +32,6 @@ This version, maintained by Arn Burkhoff, was derived from Steve Wright's APC UP
 * Hubitat Hub plugged into an APC UPS battery backup plug
 * The APC communication cable plugged into a Windows machine's USB port
 * apcupsd.org's package installed on same Windows machine
-
-This package *may* work on non-windows systems supporting VBS, but I have not tried it.
 
 Should your APC UPS support WiFi consider [LG Kahn's release](https://community.hubitat.com/t/apc-smartups-status-device/50456)<br />
 For Non-windows systems consider [Steve Wright's APC UPS Monitor Driver](https://community.hubitat.com/t/release-apc-ups-monitor-driver/13092)
@@ -71,8 +69,8 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers 
 5. [Copy the five VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd<br />
 Edit your hub's IP address in module smartUPS.VBS
-6. Create a virtual device using SmartUps driver, then set IP address to your Windows machine IP address. This should be a permanently reserved address in router. 
-7. Create a Windows Scheduled Task
+6. [Create a virtual device using SmartUps driver,](#vdevice) then set IP address to your Windows machine IP address. This IP address should be permanently reserved in your router. 
+7. [Create a Windows Scheduled Task](#windowstask)
 8. Reboot Windows system, then test
 
 [:arrow_up_small: Back to top](#top)
@@ -149,6 +147,8 @@ show image
 8. Uncheck Start the task only if computer is on AC power
 9. Click OK on bottom of window, enter your windows password (not the pin)
 10. The task is created, test it by clicking Run, then reboot system to active
+
+* Note: graceful Hub shutdown works without this task  
   
 [:arrow_up_small: Back to top](#top)
 <a name="testing"></a>
