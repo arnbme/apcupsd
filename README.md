@@ -2,7 +2,7 @@
 # SmartUPS, Windows Centric Version 
 ## Table of Contents 
 [&ensp;1. Purpose](#purpose)<br />
-[&ensp;2. Features](#require)<br />
+[&ensp;2. Requirements](#require)<br />
 [&ensp;3. Features](#features)<br />
 [&ensp;4. Donate](#support)<br />
 [&ensp;5. Installation Overview](#installOver)<br />
