@@ -1,15 +1,15 @@
 <a name="top"></a>
-# SmartUPS, Windows Centric Version 
+# SmartUPS VBS Version 
 ## Table of Contents 
 [&ensp;1. Purpose](#purpose)<br />
-[&ensp;2. Features](#require)<br />
+[&ensp;2. Requirements](#require)<br />
 [&ensp;3. Features](#features)<br />
 [&ensp;4. Donate](#support)<br />
 [&ensp;5. Installation Overview](#installOver)<br />
 [&ensp;6. SmartUPS driver and VBS modules](#modules)<br />
 [&ensp;7. Create Virtual Device](#vdevice)<br />
-[&ensp;8. Create a Windows Schedule Task](#windowstask)<br />
-[&ensp;9. Testing](#testing)<br />
+[&ensp;8. Testing](#testing)<br />
+[&ensp;9. Create a Windows Scheduler Task](#windowstask)<br />
 [10. Create RM Power Control Rule(s)](#rules)<br />
 [11. Restarting the Hub after a graceful shutdown](#restartHub)<br />
 [12. Restarting the Windows system after a shutdown](#restartWin)<br />
@@ -19,9 +19,11 @@
 
 <a name="purpose"></a>
 ## 1. Purpose
-Perform a graceful hub shutdown when power is lost.
+**Perform a graceful Hub shutdown when power is lost.** 
 
-This version, maintained by Arn Burkhoff, was derived from Steve Wright's APC UPS Monitor Driver release.
+Developed for, and tested on a Windows 10 system, but may work on any system supporting Visual Basic Script. 
+
+This version, maintained by Arn Burkhoff, was derived from Steve Wright's APC UPS Monitor Driver release, but does not use or require a PHP server.
 
 [:arrow_up_small: Back to top](#top)
 
@@ -31,8 +33,8 @@ This version, maintained by Arn Burkhoff, was derived from Steve Wright's APC UP
 * The APC communication cable plugged into a Windows machine's USB port
 * apcupsd.org's package installed on same Windows machine
 
-Should your APC UPS support WiFi [use LG Kahn's release](https://community.hubitat.com/t/apc-smartups-status-device/50456)<br />
-For Non-windows systems use [Steve Wright's APC UPS Monitor Driver](https://community.hubitat.com/t/release-apc-ups-monitor-driver/13092)
+Should your APC UPS support WiFi consider [LG Kahn's release](https://community.hubitat.com/t/apc-smartups-status-device/50456)<br />
+For Non-windows systems consider [Steve Wright's APC UPS Monitor Driver](https://community.hubitat.com/t/release-apc-ups-monitor-driver/13092)
 
 [:arrow_up_small: Back to top](#top)
 
@@ -67,9 +69,10 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers 
 5. [Copy the five VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd<br />
 Edit your hub's IP address in module smartUPS.VBS
-6. Create a virtual device using SmartUps driver, then set IP address to your Windows machine IP address. This should be a permanently reserved address in router. 
-7. Create a Windows Scheduled Task
-8. Reboot Windows system, then test
+6. [Create a virtual device using SmartUps driver,](#vdevice) then set IP address to your Windows machine IP address. This IP address should be permanently reserved in your router.
+7. [Test the VBS scripts and Hubitat SmartUPS device](#testing)
+7. [Create a Windows Scheduled Task](#windowstask)
+8. Reboot Windows system, then verify smartUPS.vbs is running on your selected schedule.
 
 [:arrow_up_small: Back to top](#top)
 
@@ -127,8 +130,33 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
 
 [:arrow_up_small: Back to top](#top)
 
+<a name="testing"></a>
+## 8. Testing
+
+1. Open a command window
+   * Right click on Windows "Start" icon, menu opens
+   * Click on Run
+   * Enter cmd, click OK, the command window opens
+   
+2. Test smartUPS.vbs as follows
+   * in command window enter: cscript C:\apcupsd\etc\apcupsd\smartUPS.vbs then click Enter key 
+   * verify hub's APC UPS device statistics were updated
+3. Test the four event scripts
+   * on command line enter: cscript C:\apcupsd\etc\apcupsd\onbattery.vbs then click Enter key<br />
+     Hub device attribute results: PowerSouce: battery; lastEvent: onbattery
+     
+   * on command line enter: cscript C:\apcupsd\etc\apcupsd\offbattery.vbs then click Enter key<br />
+     Hub device attribute results: PowerSouce: mains; lastEvent: offbattery
+   * on command line enter: cscript C:\apcupsd\etc\apcupsd\powerout.vbs then click Enter key<br />
+     Hub device attribute results: PowerSouce: battery; lastEvent: onbattery   
+   * on command line enter: cscript C:\apcupsd\etc\apcupsd\failing.vbs then click Enter key<br />
+     Hub device attribute results: PowerSouce: battery; lastEvent: failing<br />
+     When the RM example rule is installed the hub gracefully shuts down. Restart the Hub with a power cycle: power off, power on.   
+
+[:arrow_up_small: Back to top](#top)
+
 <a name="windowstask"></a>
-## 8. Create a Windows Scheduled Task.
+## 9. Create a Windows Scheduled Task.
 
 Open the Windows Task Scheduler.
 1. on right side of screenc Click on Create Task
@@ -145,14 +173,16 @@ show image
 8. Uncheck Start the task only if computer is on AC power
 9. Click OK on bottom of window, enter your windows password (not the pin)
 10. The task is created, test it by clicking Run, then reboot system to active
-  
-[:arrow_up_small: Back to top](#top)
-<a name="testing"></a>
-## 9. Testing
 
+* Note: graceful Hub shutdown works without this task  
+  
 [:arrow_up_small: Back to top](#top)
 <a name="rules"></a>
 ## 10. Prepare RM Power Control rule(s)
+Additional notification rules for events onbattery and offbattery are strongly suggested. 
+
+![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPower.png)
+
 
 [:arrow_up_small: Back to top](#top)
 <a name="keypadDH"></a>
