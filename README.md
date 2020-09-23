@@ -178,6 +178,10 @@ show image
 [:arrow_up_small: Back to top](#top)
 <a name="rules"></a>
 ## 10. Prepare RM Power Control rule(s)
+Additional notification rules for events onbattery and offbattery are strongly suggested. 
+
+![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPower.png)
+
 
 [:arrow_up_small: Back to top](#top)
 <a name="keypadDH"></a>
