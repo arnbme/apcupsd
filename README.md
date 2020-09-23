@@ -1,5 +1,5 @@
 <a name="top"></a>
-# SmartUPS, Windows Centric Version 
+# SmartUPS VBS Version 
 ## Table of Contents 
 [&ensp;1. Purpose](#purpose)<br />
 [&ensp;2. Requirements](#require)<br />
@@ -19,7 +19,9 @@
 
 <a name="purpose"></a>
 ## 1. Purpose
-Perform a graceful hub shutdown when power is lost.
+Perform a graceful hub shutdown when power is lost. 
+
+Developed and tested on a Windows 10 system. 
 
 This version, maintained by Arn Burkhoff, was derived from Steve Wright's APC UPS Monitor Driver release.
 
