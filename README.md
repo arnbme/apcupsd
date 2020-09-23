@@ -1,6 +1,6 @@
 <a name="top"></a>
 # SmartUPS V1 Sep 22, 2020 
-# The Windows Centric Version (A work in progress)
+# The Windows Centric Version 
 ## Table of Contents 
 [&ensp;1. Purpose](#purpose)<br />
 [&ensp;2. Features](#features)<br />
@@ -26,7 +26,11 @@ SmartUPS, Windows Centric Version, allows a Hubitat Hub plugged into an APC UPS,
 <a name="features"></a>
 ## 2. Features<br />
 
-* Reports UPS Device Events: onbattery - mains restored, offbattery - mains down , failing - UPS about to shutdown, and powerout - ?????<br />
+* Reports UPS Device Events in device attribute lastEvent
+  * onbattery - mains restored
+  * offbattery - mains down
+  * failing - UPS about to shutdown
+  * powerout - ?????
 * Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task<br />
 * Simplified installation and setup when compared to original version using Windows<br /> 
 * Windows modules are VBS, a Windows PHP server is not used or required<br />
@@ -44,7 +48,8 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 ## 4. Installation Overview
 1. Uninstall APC PowerChute, if installed
 
-2. Connect APC UPS supplied cable to a USB port when necesssary 
+2. Connect APC UPS supplied cable to a USB port
+3. Connect Hub power connector to a UPS Battery Back plug 
 3. [Install apcupds app](http://www.apcupsd.org), then setup apcupsd
 4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers 
 5. [Copy the five VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd
@@ -57,7 +62,11 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 <a name="modules"></a>
 ## 5. SmartUPS Driver and VBS modules
 
-There are five VBS scripts and a one Groovy Device Handler (DH) associated with this app stored in a Github respitory. You may also install he Groovy module using the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016). The VBS scripts must be copied to C:/apcupsd/etc/apcupsd from Github  
+There are five VBS scripts and a one Groovy Device Handler (DH) associated with this app stored in a Github respitory. You may also install he Groovy module using the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016). The VBS scripts must be copied to C:/apcupsd/etc/apcupsd from Github
+* After or prior to installing smartUPS.vbs
+  * edit the module
+  * change hubitatHubIp = "http://192.168.0.106:39501/notify" to the your hub's IP address
+  * For example, your hub's IP is 192.168.1.3 the new statement is hubitatHubIp = "http://192.168.1.3:39501/notify" 
  <table style="width:100%">
   <tr>
     <th>Module Name</th>
@@ -157,4 +166,5 @@ show image
 <a name="issues"></a>
 ## 14. Known Issues
 * The SmartUPS device Refresh command does nothing because no server is available for communications
+
 [:arrow_up_small: Back to top](#top)
