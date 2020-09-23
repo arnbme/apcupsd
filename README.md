@@ -156,26 +156,43 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
 [:arrow_up_small: Back to top](#top)
 
 <a name="windowstask"></a>
-## 9. Create a Windows Scheduled Task.
+## 9. Create a Windows Scheduled Task
+1. Open the Windows Task Sheduler
+   * Click on Windows task bar "search" icon
+   * Enter: Task Schedular
+   * Click on Run
+   ------------
+2. Task Scheduler opens   
+   * On right side of screen, Click on Create Task
+   * Set name: SmartUps
+   * Select "run whether user is logged in or not"
+   * On top of window click Triggers, then click New
+   ------------
+3.  Set Triggers 
+    * Set Begin the tasl selector to: At Startup
+    * Check Delay task for, key in 3 minutes   
+    * Check Repeat task for, 10 minutes, for a duration of: Indefinitly, 
+    * Enabled should be set, Set enabled if not
+    * Click OK
+    * On top of screen click Actions, then click New
+    ----------
+4. Set Actions
+   * Set Program/script to: cscript  
+   * Set Arguments to C:\apcupsd\etc\apcupsd\smartUPS.VBS
+   * click OK 
+   * On top of screen click Conditions
+   -----------
+5. Set Conditions
+   * Uncheck Start the task only if computer is on AC power
+   ------------
+6.  Save then test the Task   
+   * Click OK on bottom of window
+   * Enter your windows password (not the pin)
+   * The task is created
+   * Test it by clicking Run on right side of window
+   -------------
+7. Activate task by Rebooting system
 
-Open the Windows Task Scheduler.
-1. on right side of screenc Click on Create Task
-show image
-2. Set name SmartUps, select "run weater user is logged in or not"
-3. Click Triggers, then click New
-show image
-4. Set Begin Task at Startup, set repeat every 10 minutes, Indefinitly, Set enabled, Click OK
-5. On top of screen click Actions, then click New
-Show image
-6. set Program/script to: cscript  
-7. set Arguments to C:\apcupsd\etc\apcupsd\smartUPS.VBS click OK
-show image
-8. Uncheck Start the task only if computer is on AC power
-9. Click OK on bottom of window, enter your windows password (not the pin)
-10. The task is created, test it by clicking Run, then reboot system to active
-
-* Note: graceful Hub shutdown works without this task  
-  
 [:arrow_up_small: Back to top](#top)
 <a name="rules"></a>
 ## 10. Prepare RM Power Control rule(s)
@@ -207,7 +224,7 @@ When the Hub loses power, it will automatically restart when power is restored.
 [:arrow_up_small: Back to top](#top)
 <a name="help"></a>
 ## 14. Get Help, report an issue, and contact information
-* [Use the HE Community's Nyckelharpa forum](https://community.hubitat.com/t/release-nyckelharpa/15062) to request assistance, or to report an issue. Direct private messages to user @arnb
+* [Use the HE Community's SmartUps VBS Version forum](https://community.hubitat.com/t/release-nyckelharpa/15062) to request assistance, or to report an issue. Direct private messages to user @arnb
 
 [:arrow_up_small: Back to top](#top)
 
