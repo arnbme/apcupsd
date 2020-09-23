@@ -22,7 +22,7 @@
 ## 1. Purpose
 Perform a graceful hub shutdown when power is lost.
 
-This version is maintained by Arn Burkhoff was derived from Steve Wright's APC UPS Monitor Driver release.
+This version, maintained by Arn Burkhoff, was derived from Steve Wright's APC UPS Monitor Driver release.
 
 [:arrow_up_small: Back to top](#top)
 
