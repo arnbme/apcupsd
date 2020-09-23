@@ -73,6 +73,7 @@ Edit your hub's IP address in module smartUPS.VBS
 6. [Create a virtual device using SmartUps driver,](#vdevice) then set IP address to your Windows machine IP address. This IP address should be permanently reserved in your router.
 7. [Test the VBS scripts and Hubitat SmartUPS device](#testing)
 7. [Create a Windows Scheduled Task](#windowstask)
+8. [Adjust Windows Power setings](#sleep)
 8. Reboot Windows system, then verify smartUPS.vbs is running on your selected schedule.
 
 [:arrow_up_small: Back to top](#top)
