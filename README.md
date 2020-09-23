@@ -26,9 +26,9 @@ SmartUPS, Windows Centric Version, allows a Hubitat Hub plugged into an APC UPS,
 <a name="features"></a>
 ## 2. Features<br />
 
-* Reports UPS Device Events in device attribute lastEvent
-  * onbattery - mains restored
-  * offbattery - mains down
+* Reports UPS Device Events in  Hubitat virtual device attribute, lastEvent
+  * onbattery - mains power restored
+  * offbattery - mains power down
   * failing - UPS about to shutdown
   * powerout - ?????
 * Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task<br />
@@ -49,7 +49,8 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 1. Uninstall APC PowerChute, if installed
 
 2. Connect APC UPS supplied cable to a USB port
-3. Connect Hub power connector to a UPS Battery Back plug 
+3. Connect Hub power connector to a UPS Battery Backup plug
+   * Place a Wifi plug between the UPS and the Hub power connector, insuring a remote hub restart in some scenarios. I use a TP-Link Kasa plug.
 3. [Install apcupds app](http://www.apcupsd.org), then setup apcupsd
 4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers 
 5. [Copy the five VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd<br />
@@ -144,6 +145,10 @@ show image
 [:arrow_up_small: Back to top](#top)
 <a name="keypadDH"></a>
 ## 10. Restarting the Hub after a graceful shutdown
+
+A Wifi plug between the UPS plug and the HE Hub power connector allows for a remote hub restart in case the Hub must be power cycled to restart after a graceful shutdown. This occurs when the Hub is gracefully shutdown, but never loses power. The hub must be power cycled to restart when power is restored.
+
+When the Hub loses power, it will automatically restart when power is restored.
 
 <a name="restartWin"></a>
 ## 11. Restarting the Windows system after a shutdown
