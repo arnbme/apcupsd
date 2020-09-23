@@ -42,8 +42,8 @@ For Non-windows systems consider [Steve Wright's APC UPS Monitor Driver](https:/
 ## 3. Features<br />
 
 * Reports UPS Device Events in  Hubitat virtual device attribute, lastEvent
-  * onbattery - mains power restored
-  * offbattery - mains power down
+  * onbattery - mains power failed
+  * offbattery - mains power restored
   * failing - UPS about to shutdown
   * powerout - UPS switched to batteries (for any reason)
 * Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task.<br />
