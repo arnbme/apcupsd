@@ -23,7 +23,7 @@ Perform a graceful hub shutdown when power is lost.
 
 Developed for, and tested on a Windows 10 system, but may work on any system supporting Visual Basic Script. 
 
-This version, maintained by Arn Burkhoff, was derived from Steve Wright's APC UPS Monitor Driver release.
+This version, maintained by Arn Burkhoff, was derived from Steve Wright's APC UPS Monitor Driver release, but does not use or require a PHP server.
 
 [:arrow_up_small: Back to top](#top)
 
