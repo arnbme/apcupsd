@@ -95,19 +95,6 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
   </tr>
 </table> 
 
-* https://docs.hubitat.com/index.php?title=How_to_Install_Custom_Apps <br />
-* let's begin by installing the Nyckelharpa parent module into Hubitat (HE) from this Github repository.<br />
-* OAuth is not required and should be skipped.<br /> 
-* Save the the Nyckeharpa module
-* Using Install's Import button: each module's Github raw address is availabe at the beginning of the module.<br />
-* Then install Modefix, Talker, and User, ignore OAuth, and do not add these modules as User Apps.
-* In Apps: click the "Add User App" button, select the Nycklharpa, click Done
-
-* Should you be using the user Centralite Keypad driver follow these directions<br />
-https://docs.hubitat.com/index.php?title=How_to_Install_Custom_Drivers
-
-*  Next step: Quick Setup Guide
-
 [:arrow_up_small: Back to top](#top)
 
 
