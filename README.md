@@ -150,7 +150,7 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
      Hub device attribute results: PowerSouce: battery; lastEvent: onbattery   
    * on command line enter: cscript C:\apcupsd\etc\apcupsd\failing.vbs then click Enter key<br />
      Hub device attribute results: PowerSouce: battery; lastEvent: failing<br />
-     When setting "Perform graceful shutdown on UPS failure" is true: the hub gracefully shuts down. Restart the Hub with a power cycle: power off, power on.   
+     When the RM example rule is installed the hub gracefully shuts down. Restart the Hub with a power cycle: power off, power on.   
 
 [:arrow_up_small: Back to top](#top)
 
