@@ -45,7 +45,7 @@ For Non-windows systems use [Steve Wright's APC UPS Monitor Driver](https://comm
   * offbattery - mains power down
   * failing - UPS about to shutdown
   * powerout - ?????
-* Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task<br />
+* Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task. Optional but strongly suggested.<br />
 * Simplified installation and setup when compared to original version using Windows<br /> 
 * Windows modules are VBS, a Windows PHP server is not used or required<br />
 * Executes without being logged in to Windows
