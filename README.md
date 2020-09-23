@@ -45,7 +45,7 @@ For Non-windows systems consider [Steve Wright's APC UPS Monitor Driver](https:/
   * onbattery - mains power restored
   * offbattery - mains power down
   * failing - UPS about to shutdown
-  * powerout - ?????
+  * powerout - UPS switched to batteries (for any reason)
 * Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task.<br />
 * Support modules are Visual Basic Script, no Windows server required or used<br />
 * Executes without being logged in to Windows
