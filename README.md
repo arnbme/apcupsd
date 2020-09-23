@@ -125,7 +125,19 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
 
 
 <a name="vdevice"></a>
-## 7. Create a Virtual Device
+## 7. Create and setup a Virtual Device
+   * On Hubitat main menu, click Devices
+   * Click: Add Virtual Device
+   * Set Device Name and Device Label to: APC UPS (or whatever you want)
+   * Type: Select User driver - SmartUPS
+   * Set Event History to 5 (optional)
+   * Click button: Save Device
+   ----------------------------
+   * Set IP Address of system running apcupsd
+   * Click button: Save Preferences
+   ----------------
+   * Set Event History to 5 (optional)
+   * Click button: Save Device   
 
 
 [:arrow_up_small: Back to top](#top)
