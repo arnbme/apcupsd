@@ -13,6 +13,7 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *	The following changes by Arn Burkhoff
+ *  2020-09-23 V0.0.4 Adjust setings positions and text  
  *  2020-09-22 V0.0.3 Add support for UPS "failing" event, UPS is about to shut down, add attribute lastEvent and store last event status  
  *  2020-09-21 V0.0.2 Add input setting for using VBS modules in windows 
  *                            Mostly informational for user, but does not send hub commands on Device refresh			
@@ -57,18 +58,18 @@ metadata
 
 	preferences
 	{	
-		section("Use Windows with VBS")
-		{
-			input "globalVBS", "bool", required: true, defaultValue: false,
-				title: "ON: Using VBS with a windows machine without a server. Disables refresh command<br />OFF (Default): Using standard PHP server interface"
-		}
 		section("Device")
 		{
-			input("ip", "string", title:"IP Address of apcupsd host system", defaultValue: "192.168.7." ,required: true, displayDuringSetup: true)		
+			input("ip", "string", title:"IP Address of apcupsd host system (Windows computer)", defaultValue: "192.168.nnn.nnn" ,required: true, displayDuringSetup: true)		
 		}
 		section
 		{
 			input "enableDebug", "bool", title: "Enables debug logging for 30 minutes", defaultValue: false, required: false
+		}
+		section("Use Windows with VBS")
+		{
+			input "globalVBS", "bool", required: true, defaultValue: true,
+				title: "ON (Default): Using VBS with a Windows computer. Disables refresh command<br />OFF: Using standard PHP server interface"
 		}
 	}
 }
