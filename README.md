@@ -62,7 +62,10 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 <a name="modules"></a>
 ## 5. SmartUPS Driver and VBS modules
 
-There are five VBS scripts and a one Groovy Device Handler (DH) associated with this app stored in a Github respitory. You may also install he Groovy module using the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016). The VBS scripts must be copied to C:/apcupsd/etc/apcupsd from Github  
+There are five VBS scripts and a one Groovy Device Handler (DH) associated with this app stored in a Github respitory. You may also install he Groovy module using the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016). The VBS scripts must be copied to C:/apcupsd/etc/apcupsd from Github
+* After or prior to installing smartUPS.vbs
+  * edit the module
+  * change hubitatHubIp = "http://192.168.0.106:39501/notify" to the your hub's IP address
  <table style="width:100%">
   <tr>
     <th>Module Name</th>
