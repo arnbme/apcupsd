@@ -244,7 +244,8 @@ Some links
 
 <a name="issues"></a>
 ## 15. Known Issues
-* The
-SmartUPS device Refresh command does nothing because no server is available for communications
+* The SmartUPS device Refresh command does nothing because no server is available for communications
+* The device's non-functional Cancel, Pause, Set Time Remaining, Start, and Stop are inserted by the Hubitat system, and throw an error when clicked.   
+
 
 [:arrow_up_small: Back to top](#top)
