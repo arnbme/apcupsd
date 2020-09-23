@@ -69,9 +69,10 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers 
 5. [Copy the five VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd<br />
 Edit your hub's IP address in module smartUPS.VBS
-6. [Create a virtual device using SmartUps driver,](#vdevice) then set IP address to your Windows machine IP address. This IP address should be permanently reserved in your router. 
+6. [Create a virtual device using SmartUps driver,](#vdevice) then set IP address to your Windows machine IP address. This IP address should be permanently reserved in your router.
+7. [Test the VBS scripts and Hubitat SmartUPS device](#testing)
 7. [Create a Windows Scheduled Task](#windowstask)
-8. Reboot Windows system, then test
+8. Reboot Windows system, then verify smartUPS.vbs is running on your selected schedule.
 
 [:arrow_up_small: Back to top](#top)
 
