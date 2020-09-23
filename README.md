@@ -48,7 +48,8 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 ## 4. Installation Overview
 1. Uninstall APC PowerChute, if installed
 
-2. Connect APC UPS supplied cable to a USB port when necesssary 
+2. Connect APC UPS supplied cable to a USB port
+3. Connect Hub power connector to a UPS Battery Back plug 
 3. [Install apcupds app](http://www.apcupsd.org), then setup apcupsd
 4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers 
 5. [Copy the five VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd
