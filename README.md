@@ -8,7 +8,7 @@
 [&ensp;5. Installation Overview](#installOver)<br />
 [&ensp;6. SmartUPS driver and VBS modules](#modules)<br />
 [&ensp;7. Create Virtual Device](#vdevice)<br />
-[&ensp;8. Create a Windows Schedule Task](#windowstask)<br />
+[&ensp;8. Create a Windows Scheduler Task](#windowstask)<br />
 [&ensp;9. Testing](#testing)<br />
 [10. Create RM Power Control Rule(s)](#rules)<br />
 [11. Restarting the Hub after a graceful shutdown](#restartHub)<br />
@@ -153,6 +153,26 @@ show image
 [:arrow_up_small: Back to top](#top)
 <a name="testing"></a>
 ## 9. Testing
+
+1. Open a command window
+   * Right click on Windows "Start" icon, menu opens
+   * Click on Run
+   * Enter cmd, click OK, the command window opens
+   
+2. Test smartUPS.vbs as follows
+   * in command window enter: cscript C:\apcupsd\etc\apcupsd\smartUPS.vbs then click Enter key 
+   * verify hub's APC UPS device statistics were updated
+3. Test the four event scripts
+   * on command line enter: cscript C:\apcupsd\etc\apcupsd\onbattery.vbs then click Enter key<br />
+     Hub device attribute results: PowerSouce: battery; lastEvent: onbattery
+     
+   * on command line enter: cscript C:\apcupsd\etc\apcupsd\offbattery.vbs then click Enter key<br />
+     Hub device attribute results: PowerSouce: mains; lastEvent: offbattery
+   * on command line enter: cscript C:\apcupsd\etc\apcupsd\powerout.vbs then click Enter key<br />
+     Hub device attribute results: PowerSouce: battery; lastEvent: onbattery   
+   * on command line enter: cscript C:\apcupsd\etc\apcupsd\failing.vbs then click Enter key<br />
+     Hub device attribute results: PowerSouce: battery; lastEvent: failing<br />
+     When setting "Perform graceful shutdown on UPS failure" is true: the hub gracefully shuts down. Restart the Hub with a power cycle: power off, power on.   
 
 [:arrow_up_small: Back to top](#top)
 <a name="rules"></a>
