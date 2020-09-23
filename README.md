@@ -162,4 +162,5 @@ show image
 <a name="issues"></a>
 ## 14. Known Issues
 * The SmartUPS device Refresh command does nothing because no server is available for communications
+
 [:arrow_up_small: Back to top](#top)
