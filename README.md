@@ -10,12 +10,13 @@
 [&ensp;7. Create Virtual Device](#vdevice)<br />
 [&ensp;8. Testing](#testing)<br />
 [&ensp;9. Create a Windows Scheduler Task](#windowstask)<br />
-[10. Create RM Power Control Rule(s)](#rules)<br />
-[11. Restarting the Hub after a graceful shutdown](#restartHub)<br />
-[12. Restarting the Windows system after a shutdown](#restartWin)<br />
-[13. Uninstalling](#uninstall)<br />
-[14. Get Help, report an issue, or contact information](#help)<br />
-[15. Known Issues](#issues)
+[10. Adjust Windows Power Settings](#sleep)<br />
+[11. Create RM Power Control Rule(s)](#rules)<br />
+[12. Restarting the Hub after a graceful shutdown](#restartHub)<br />
+[13. Restarting the Windows system after a shutdown](#restartWin)<br />
+[14. Uninstalling](#uninstall)<br />
+[15. Get Help, report an issue, or contact information](#help)<br />
+[16. Known Issues](#issues)
 
 <a name="purpose"></a>
 ## 1. Purpose
@@ -205,8 +206,17 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
 7. Activate task by Rebooting system
 
 [:arrow_up_small: Back to top](#top)
+
+<a name="sleep"></a>
+## 10. Adjust Windows Power Settings
+* On Power and Batteries change "Put Computer to Sleep" to Never
+Unless you can figure out a way to wake the machine as needed
+
+[:arrow_up_small: Back to top](#top)
+
+
 <a name="rules"></a>
-## 10. Prepare RM Power Control rule(s)
+## 11. Prepare RM Power Control rule(s)
 Additional notification rules for events onbattery and offbattery are strongly suggested. 
 
 ![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPower.png)
@@ -214,14 +224,14 @@ Additional notification rules for events onbattery and offbattery are strongly s
 
 [:arrow_up_small: Back to top](#top)
 <a name="keypadDH"></a>
-## 11. Restarting the Hub after a graceful shutdown
+## 12. Restarting the Hub after a graceful shutdown
 
 A Wifi plug between the UPS plug and the HE Hub power connector allows for a remote hub restart in case the Hub must be power cycled to restart after a graceful shutdown. This occurs when the Hub is gracefully shutdown, but never loses power. The hub must be power cycled to restart when power is restored.
 
 When the Hub loses power, it will automatically restart when power is restored.
 
 <a name="restartWin"></a>
-## 12. Restarting the Windows system after a shutdown
+## 13. Restarting the Windows system after a shutdown
 Some links
    * https://www.technewsworld.com/story/78930.html
    * https://www.technewsworld.com/story/86034.html
@@ -229,7 +239,7 @@ Some links
 [:arrow_up_small: Back to top](#top)
 
 <a name="uninstall"></a>
-## 13. Uninstalling
+## 14. Uninstalling
 1. Delete scheduled task<br />
 2. Uninstall apcupsd<br />
 3. Remove SmartUPS virtual device<br />
@@ -237,7 +247,7 @@ Some links
 
 [:arrow_up_small: Back to top](#top)
 <a name="help"></a>
-## 14. Get Help, report an issue, and contact information
+## 15. Get Help, report an issue, and contact information
 * [Use the HE Community's SmartUps VBS Version forum](https://community.hubitat.com/t/release-nyckelharpa/15062) to request assistance, or to report an issue. Direct private messages to user @arnb
 
 [:arrow_up_small: Back to top](#top)
