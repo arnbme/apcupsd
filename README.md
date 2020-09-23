@@ -114,21 +114,6 @@ https://docs.hubitat.com/index.php?title=How_to_Install_Custom_Drivers
 <a name="vdevice"></a>
 ## 6. Create a Virtual Device
 
-Global Settings is reached by: clicking Apps in the menu, then click the Nyckelharpa app, scroll down to Global Settings, then click  "click to show" 
-1. Select all the keypads used for arming HSM
-* When devices are selected, default options for valid and invalid pin message routing are shown
-
-2. <b>Prepare for Forced Arming:</b> <i>For each armState</i> select real contact sensor devices that will allow HSM arming when the device is Open.
-* _When Global Settings is saved, each selectd contact generates a child Virtual Contact Sensor named NCKL-contact-sensor-name that must be used to Adjust HSM Settings for Forced HSM Arming
-* Specify optional destinations for "Arming canceled contact open" and "Arming forced messages: Push, SMS, Talk. Optional, but must be set to output these messages
-3. Select any contact to be monitored for Open / Close Talker messages only, that are not used with Forced HSM Arming
-
-4. Select any alarms and beeps as required
-5. Set the Virtual Child Device prefix, Default NCKL. Once set, it displays but cannot be changed.
-
-6. Set any Hubitat PhoneApp and Pushover messaging devices
-
-7. *When finished, click Next, then click Done*
 
 [:arrow_up_small: Back to top](#top)
 
@@ -155,139 +140,16 @@ show image
 <a name="testing"></a>
 ## 8. Testing
 
-Modefix processes HSM armState changes, and optionally sets the Hubitat HSM mode. _It must be created even when the optional mode change data is empty._ 
-
-(Optional) For each armState set:
-* all valid modes for the armState
-* the default mode for the armState
-
-Caution: improper armState/mode choices, creates havoc with the system.
-
 [:arrow_up_small: Back to top](#top)
 <a name="rules"></a>
 ## 9. Prepare RM Power Control rule(s)
-
-Table with Reason Issued and Message Issued. 
-* Pin messages, arming canceled, and arming forced, do not allow for text adjustment. 
- <table style="width:100%">
-  <tr>
-    <th>Reason Issued</th>
-    <th>Default Message</th>
-   <th>Destinations</th> 
-   <th>Issueing Module</th> 
-  </tr>
-  <tr>
-    <td>Contact Sensor Opens, arm state disarmed</td>
-    <td>%device is now open</td>
-   <td>TTS, Speaker</td>
-   <td>Nyckelharpa</td>
-  </tr>
-  <tr>
-    <td>Contact Sensor Closes, arm state disarmed</td>
-   <td>%device is now closed</td>
-   <td>TTS, Speaker</td>
-   <td>Nyckelharpa</td>
- </tr>
-  <tr>
-    <td>Exit Delay</td>
-    <td>Alarm system is arming in %nn seconds. Please exit the facility</td>
-   <td>TTS, Speaker</td>
-   <td>Nyckelharpa Modefix</td>
-  </tr>
-  <tr>
-    <td>Entry Delay</td>
-    <td>Disarm system, or police will arrive shortly</td>
-    <td>TTS, Speaker</td>
-   <td>Nyckelharpa</td>
-  </tr>
-  <tr>
-    <td>System Armed</td>
-    <td>Alarm System is now armed in %hsmStatus Mode</td>
-   <td>TTS, Speaker</td>
-   <td>Nyckelharpa Modefix</td>
-  </tr>
-  <tr>
-    <td>System Disarmed</td>
-    <td>System Disarmed</td>
-   <td>TTS, Speaker</td>
-   <td>Nyckelharpa Modefix</td>
-  </tr>
-  <tr>
-    <td>Valid Pin Entered<br>Centralitex driver only</td>
-    <td>%keypad.displayname set HSM state to %armState with pin for %userName</td>
-   <td>User Defined in global Settings</td>
-   <td>Nyckelharpa</td>
-  </tr> 
-  <tr>
-    <td>Bad Pin Entered<br>Centralitex driver only</td>
-    <td>%keypad.displayname Invalid pin entered: %pinCode</td>
-    <td>User Defined in global Settings</td>
-    <td>Nyckelharpa</td>
-  </tr>
-   <tr>
-    <td>Arming Canceled Open Contact (1)</td>
-    <td>Arming Canceled %contact name(s) is open. Rearming within 15 seconds will force arming </td>
-    <td>User Defined in global Settings</td>
-    <td>Nyckelharpa</td>    
-  </tr> 
-  <tr>
-    <td>Arming Forced Open Contact<br>Centralitex driver only</td>
-    <td>Arming Forced %contact name(s) is open.</td>
-    <td>User Defined in global Settings</td>
-   </td><td>Nyckelharpa</td>
-  </tr>
-  <tr>
-    <td>Intrusion Message</td>
-   <td>Defined in HSM</td>
-    <td>User Defined HSM</td>
-   </td><td>HSM</td>
-  </tr>
-<tr>
-    <td>Panic Message</td>
-   <td>Defined in HSM Custom Rule</td>
-    <td>User Defined Custom HSM Rule (see Section 12)</td>
-   </td><td>HSM</td>
-  </tr>
-  </table>
-  
-1. In order to get the Nyckelharpa contacts open message and forced arming when using anything other the the Centralite Keypad driver: you must create an alert in HSM's Configure Arming/Disarming/Cancel --> Configure Alerts for Arming Failures. Please read Section 7, paragraph 2. 
 
 [:arrow_up_small: Back to top](#top)
 <a name="keypadDH"></a>
 ## 10. Restarting the Hub after a graceful shutdown
 
-The Centalitex Keypad Device Handler was created by Mitch Pond on SmartThings, where it is still used by a few Smartapps including SHM Delay. With Mitch's assistance and Zigbee skills it was ported to HE, then I added the Alarm capability that sounds a fast high pitch tone until set off on the Iris V2, and beeps for 255 seconds on the Centralite, and the compatabilitty with the Hubitat keypad device drivers, HSM and Lock Code Manager. 
-
-_This DH may be used with the Centralite/Xfinity 3400, Centralite 3400-G, Iris V2, Iris V3 and UEI keypads_
-
-1. After installing the keypad DH, edit keypad devices changing Type to Centralitex Keypad, Save Device
-
-2. Remove keypads using Centralitex driver from HSM. In HSM section Configure Arming/Disarming/Cancel Options --> Use keypad(s) to arm/disarm: optionally remove keypads using the Centralitex driver.
-
-3. Add keypad to Nyckelharpa Global Settings
-
-4. When using Nyckelharpa pins: Create User pin profiles. When using an Iris V3 User pin code 0000 is required and used for instant arming, but will not disarm. This keypad does not send a pin, even if entered, when arming.
-
-5. When using Lock Code Manager Pins: in this device's setting set "Use Lock Code Manager Pins" on, save settings
-
-5. Create HSM Custom Panic Rule
-
-6. When using an Iris V2/V3 keypad set if Partial key creates Home (default) or Night arming mode
-
-[:arrow_up_small: Back to top](#top)
 <a name="restartWin"></a>
 ## 11. Restarting the Windows system after a shutdown
-
-When using the app's keypad Device Handler and User Pin Module
-* For each valid user pin, create a User pin profile
-
-* Pin codes may be restricted by date/time, use count (burnable pins), and keypad device
-
-* To use the Iris V2's instant arming, no pin required, create a User profile with pin code 0000. It is not accepted for OFF
-
-* *The Iris V3 requires a User profile with pin code 0000, or it will not arm.* It is not accepted for OFF.
-
-* You may define "Panic Pins" designed for use on keypads without a Panic key, but may be used on any keypad
 
 [:arrow_up_small: Back to top](#top)
 
