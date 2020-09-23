@@ -31,6 +31,8 @@ This version, maintained by Arn Burkhoff, was derived from Steve Wright's APC UP
 * The APC communication cable plugged into a Windows machine's USB port
 * apcupsd.org's package installed on same Windows machine
 
+This package *may* work on non-windows hardware, but I have not tried it.
+
 Should your APC UPS support WiFi consider [LG Kahn's release](https://community.hubitat.com/t/apc-smartups-status-device/50456)<br />
 For Non-windows systems consider [Steve Wright's APC UPS Monitor Driver](https://community.hubitat.com/t/release-apc-ups-monitor-driver/13092)
 
