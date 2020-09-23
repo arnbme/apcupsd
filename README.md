@@ -4,27 +4,35 @@
 ## Table of Contents 
 [&ensp;1. Purpose](#purpose)<br />
 [&ensp;2. Features](#features)<br />
-[&ensp;3. Donate](#support)<br />
-[&ensp;4. Installation Overview](#installOver)<br />
-[&ensp;5. SmartUPS driver and VBS modules](#modules)<br />
-[&ensp;6. Create Virtual Device](#vdevice)<br />
-[&ensp;7. Create a Windows Schedule Task](#windowstask)<br />
-[&ensp;8. Testing](#testing)<br />
-[&ensp;9. Create RM Power Control Rule(s)](#rules)<br />
-[10. Restarting the Hub after a graceful shutdown](#restartHub)<br />
-[11. Restarting the Windows system after a shutdown](#restartWin)<br />
-[12. Uninstalling](#uninstall)<br />
-[13. Get Help, report an issue, or contact information](#help)<br />
-[14. Known Issues](#issues)
+[&ensp;3. Features](#features)<br />
+[&ensp;4. Donate](#support)<br />
+[&ensp;5. Installation Overview](#installOver)<br />
+[&ensp;6. SmartUPS driver and VBS modules](#modules)<br />
+[&ensp;7. Create Virtual Device](#vdevice)<br />
+[&ensp;8. Create a Windows Schedule Task](#windowstask)<br />
+[&ensp;9. Testing](#testing)<br />
+[10. Create RM Power Control Rule(s)](#rules)<br />
+[11. Restarting the Hub after a graceful shutdown](#restartHub)<br />
+[12. Restarting the Windows system after a shutdown](#restartWin)<br />
+[13. Uninstalling](#uninstall)<br />
+[14. Get Help, report an issue, or contact information](#help)<br />
+[15. Known Issues](#issues)
 
 <a name="purpose"></a>
 ## 1. Purpose
+Perform a graceful hub shutdown when power is lost.
+
 SmartUPS, Windows Centric Version, allows a Hubitat Hub plugged into an APC UPS, and using apcupsd.org's package on a Windows machine, to gracefully shut down during a power outage. This version is maintained by Arn Burkhoff was derived from Steve Wright's SmartUPS release.
 
 [:arrow_up_small: Back to top](#top)
 
+<a name="require"></a>
+## 2. Requirements
+* Hubitat Hub plugged into an APC UPS battery backup plug
+* apcupsd.org's package installed on a Windows machine, with an APC communication cable plugged into same machine's USB port
+
 <a name="features"></a>
-## 2. Features<br />
+## 3. Features<br />
 
 * Reports UPS Device Events in  Hubitat virtual device attribute, lastEvent
   * onbattery - mains power restored
@@ -38,14 +46,14 @@ SmartUPS, Windows Centric Version, allows a Hubitat Hub plugged into an APC UPS,
 
 [:arrow_up_small: Back to top](#top)
 <a name="support"></a>
-## 3. Support this project
+## 4. Support this project
 This app is free. However, if you like it, derived benefit from it, and want to express your support, donations are appreciated.
 * Paypal: https://www.paypal.me/arnbme 
 
 [:arrow_up_small: Back to top](#top)
 
 <a name="installOver"></a>
-## 4. Installation Overview
+## 5. Installation Overview
 1. Uninstall APC PowerChute, if installed
 
 2. Connect APC UPS supplied cable to a USB port
@@ -62,7 +70,7 @@ Edit your hub's IP address in module smartUPS.VBS
 [:arrow_up_small: Back to top](#top)
 
 <a name="modules"></a>
-## 5. SmartUPS Driver and VBS modules
+## 6. SmartUPS Driver and VBS modules
 
 There are five VBS scripts and a one Groovy Device Handler (DH) associated with this app stored in a Github respitory. You may also install he Groovy module using the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016). The VBS scripts must be copied to C:/apcupsd/etc/apcupsd from Github
 * After or prior to installing smartUPS.vbs
@@ -110,13 +118,13 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
 
 
 <a name="vdevice"></a>
-## 6. Create a Virtual Device
+## 7. Create a Virtual Device
 
 
 [:arrow_up_small: Back to top](#top)
 
 <a name="windowstask"></a>
-## 7. Create a Windows Scheduled Task.
+## 8. Create a Windows Scheduled Task.
 
 Open the Windows Task Scheduler.
 1. on right side of screenc Click on Create Task
@@ -136,27 +144,27 @@ show image
   
 [:arrow_up_small: Back to top](#top)
 <a name="testing"></a>
-## 8. Testing
+## 9. Testing
 
 [:arrow_up_small: Back to top](#top)
 <a name="rules"></a>
-## 9. Prepare RM Power Control rule(s)
+## 10. Prepare RM Power Control rule(s)
 
 [:arrow_up_small: Back to top](#top)
 <a name="keypadDH"></a>
-## 10. Restarting the Hub after a graceful shutdown
+## 11. Restarting the Hub after a graceful shutdown
 
 A Wifi plug between the UPS plug and the HE Hub power connector allows for a remote hub restart in case the Hub must be power cycled to restart after a graceful shutdown. This occurs when the Hub is gracefully shutdown, but never loses power. The hub must be power cycled to restart when power is restored.
 
 When the Hub loses power, it will automatically restart when power is restored.
 
 <a name="restartWin"></a>
-## 11. Restarting the Windows system after a shutdown
+## 12. Restarting the Windows system after a shutdown
 
 [:arrow_up_small: Back to top](#top)
 
 <a name="uninstall"></a>
-## 12. Uninstalling
+## 13. Uninstalling
 1. Delete scheduled task<br />
 2. Uninstall apcupsd<br />
 3. Remove SmartUPS virtual device<br />
@@ -164,13 +172,14 @@ When the Hub loses power, it will automatically restart when power is restored.
 
 [:arrow_up_small: Back to top](#top)
 <a name="help"></a>
-## 13. Get Help, report an issue, and contact information
+## 14. Get Help, report an issue, and contact information
 * [Use the HE Community's Nyckelharpa forum](https://community.hubitat.com/t/release-nyckelharpa/15062) to request assistance, or to report an issue. Direct private messages to user @arnb
 
 [:arrow_up_small: Back to top](#top)
 
 <a name="issues"></a>
-## 14. Known Issues
-* The SmartUPS device Refresh command does nothing because no server is available for communications
+## 15. Known Issues
+* The
+SmartUPS device Refresh command does nothing because no server is available for communications
 
 [:arrow_up_small: Back to top](#top)
