@@ -8,8 +8,8 @@
 [&ensp;5. Installation Overview](#installOver)<br />
 [&ensp;6. SmartUPS driver and VBS modules](#modules)<br />
 [&ensp;7. Create Virtual Device](#vdevice)<br />
-[&ensp;8. Create a Windows Scheduler Task](#windowstask)<br />
-[&ensp;9. Testing](#testing)<br />
+[&ensp;8. Testing](#testing)<br />
+[&ensp;9. Create a Windows Scheduler Task](#windowstask)<br />
 [10. Create RM Power Control Rule(s)](#rules)<br />
 [11. Restarting the Hub after a graceful shutdown](#restartHub)<br />
 [12. Restarting the Windows system after a shutdown](#restartWin)<br />
@@ -129,30 +129,8 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
 
 [:arrow_up_small: Back to top](#top)
 
-<a name="windowstask"></a>
-## 8. Create a Windows Scheduled Task.
-
-Open the Windows Task Scheduler.
-1. on right side of screenc Click on Create Task
-show image
-2. Set name SmartUps, select "run weater user is logged in or not"
-3. Click Triggers, then click New
-show image
-4. Set Begin Task at Startup, set repeat every 10 minutes, Indefinitly, Set enabled, Click OK
-5. On top of screen click Actions, then click New
-Show image
-6. set Program/script to: cscript  
-7. set Arguments to C:\apcupsd\etc\apcupsd\smartUPS.VBS click OK
-show image
-8. Uncheck Start the task only if computer is on AC power
-9. Click OK on bottom of window, enter your windows password (not the pin)
-10. The task is created, test it by clicking Run, then reboot system to active
-
-* Note: graceful Hub shutdown works without this task  
-  
-[:arrow_up_small: Back to top](#top)
 <a name="testing"></a>
-## 9. Testing
+## 8. Testing
 
 1. Open a command window
    * Right click on Windows "Start" icon, menu opens
@@ -174,6 +152,29 @@ show image
      Hub device attribute results: PowerSouce: battery; lastEvent: failing<br />
      When setting "Perform graceful shutdown on UPS failure" is true: the hub gracefully shuts down. Restart the Hub with a power cycle: power off, power on.   
 
+[:arrow_up_small: Back to top](#top)
+
+<a name="windowstask"></a>
+## 9. Create a Windows Scheduled Task.
+
+Open the Windows Task Scheduler.
+1. on right side of screenc Click on Create Task
+show image
+2. Set name SmartUps, select "run weater user is logged in or not"
+3. Click Triggers, then click New
+show image
+4. Set Begin Task at Startup, set repeat every 10 minutes, Indefinitly, Set enabled, Click OK
+5. On top of screen click Actions, then click New
+Show image
+6. set Program/script to: cscript  
+7. set Arguments to C:\apcupsd\etc\apcupsd\smartUPS.VBS click OK
+show image
+8. Uncheck Start the task only if computer is on AC power
+9. Click OK on bottom of window, enter your windows password (not the pin)
+10. The task is created, test it by clicking Run, then reboot system to active
+
+* Note: graceful Hub shutdown works without this task  
+  
 [:arrow_up_small: Back to top](#top)
 <a name="rules"></a>
 ## 10. Prepare RM Power Control rule(s)
