@@ -211,6 +211,9 @@ When the Hub loses power, it will automatically restart when power is restored.
 
 <a name="restartWin"></a>
 ## 12. Restarting the Windows system after a shutdown
+Some links
+   * https://www.technewsworld.com/story/78930.html
+   * https://www.technewsworld.com/story/86034.html
 
 [:arrow_up_small: Back to top](#top)
 
