@@ -185,7 +185,7 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
 5. Set Conditions
    * Uncheck Start the task only if computer is on AC power
    ------------
-6.  Save then test the Task   
+6. Save then test the Task   
    * Click OK on bottom of window
    * Enter your windows password (not the pin)
    * The task is created
