@@ -19,7 +19,7 @@
 
 <a name="purpose"></a>
 ## 1. Purpose
-Perform a graceful hub shutdown when power is lost. 
+**Perform a graceful Hub shutdown when power is lost.** 
 
 Developed for, and tested on a Windows 10 system, but may work on any system supporting Visual Basic Script. 
 
