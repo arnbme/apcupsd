@@ -13,9 +13,9 @@
 [&ensp;9. Create RM Power Control Rule(s)](#rules)<br />
 [10. Restarting the Hub after a graceful shutdown](#restartHub)<br />
 [11. Restarting the Windows system after a shutdown](#restartWin)<br />
-[16. Uninstalling](#uninstall)<br />
-[17. Get Help, report an issue, or contact information](#help)<br />
-[18. Known Issues](#issues)
+[12. Uninstalling](#uninstall)<br />
+[13. Get Help, report an issue, or contact information](#help)<br />
+[14. Known Issues](#issues)
 
 <a name="purpose"></a>
 ## 1. Purpose
@@ -292,28 +292,20 @@ When using the app's keypad Device Handler and User Pin Module
 [:arrow_up_small: Back to top](#top)
 
 <a name="uninstall"></a>
-## 16. Uninstalling
-1. If using forced arming, change HSM settings NCKL-child devices to real devices<br />
-2. If using Panic Key or Panic pins, remove custom Panic rule from HSM<br />
-3. it is now safe to remove Nyckelharpa, child devices are deleted during removal process
+## 12. Uninstalling
+1. Delete scheduled task<br />
+2. Uninstall apcupsd<br />
+3. Remove SmartUPS virtual device<br />
+4. Remove SmartUPS from Devices code
 
 [:arrow_up_small: Back to top](#top)
 <a name="help"></a>
-## 17. Get Help, report an issue, and contact information
+## 13. Get Help, report an issue, and contact information
 * [Use the HE Community's Nyckelharpa forum](https://community.hubitat.com/t/release-nyckelharpa/15062) to request assistance, or to report an issue. Direct private messages to user @arnb
 
 [:arrow_up_small: Back to top](#top)
 
 <a name="issues"></a>
-## 18. Known Issues
-* Messages need individual custom destination settings
-
-* SMS was disabled by Hubitat, but is still defined as a destination. Do not use SMS
-
-* Iris V3 Keypad Issue: Lights remain on when device is sitting upright on a table or flat surface.<br /> 
-Cause: Keypad's motion or proximity sensor is activated.<br /> 
-Solution: Move keypad to edge of table, lay it flat on table or surface, or mount it on a wall. 
-
-* Do not intermix Centralitex keypad drivers with system keypad drivers. Use one or the other
-
+## 14. Known Issues
+* The SmartUPS device Refresh command does nothing because no server is available for communications
 [:arrow_up_small: Back to top](#top)
