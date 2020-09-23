@@ -139,32 +139,21 @@ Global Settings is reached by: clicking Apps in the menu, then click the Nyckelh
 <a name="windowstask"></a>
 ## 7. Create a Windows Scheduled Task.
 
-Forced Arming is a two step process: An standard initial HSM arming that fails normally, followed by a second arming within 15 seconds that forces HSM to arm. It works from any arming source, including: keypads, locks, dashboards, and the HSM app
-
-1. Required Basic Setup: 
-* Follow instructions in Section 6 above, generating the NCKL-child-contact-sensors 
-
-2. <b>Important!</b> When arming from the Dashboard HSM Status, a keypad using the HE System Keypad drivers, or anything other than a keypad using the Centralite keypad driver: an alert must be created in HSM's Configure Arming/Disarming/Cancel --> Configure Alerts for Arming Failures (contacts open) section, or HSM immediately arms ignoring all open contacts. 
-* Suggested solution:<br /> 
-Create a dummy Virtual Switch<br />
-Edit dummy Virtual device's settings, disable debug and text logging<br />
-In HSM's Configure Arming/Disarming/Cancel --> Configure Alerts --> Light Alerts: turn on the "dummy Virtual Switch".
-
-3. Setup HSM's devices for Forced Arming: 
-* In Intrusion-Away, Intrusion-Home, and Intrusion-Night, "Contact Sensors": replace the real contact-sensor-name(s) with the virtual NCKL-contact-sensor-name(s)
-* In "Configure/Arming/Disarming/Cancel Options", "Delay only for selected doors": replace the real contact-sensor-name(s) with the virtual NCKL-contact-sensor-name(s)
-
-4. How to Force Arm, a two step process: Arming that fails normally, then Arming again within 15 seconds
-* Arm system as you would normally. When there is an open contact sensor monitored by Nyckelharpa, the system will not arm as is normal for HSM
-* At the initial arm fail:<br /> 
-Talker issues an alert message including the open sensor(s) and the 15 second forced rearm time<br />
-Keypads using Centalitex driver:<br />
-Centralite/Xfinity-reject tone, delay, two beeps<br />
-Iris V2-reject tone, delay, two beeps with old beep or three or four chirps new beep<br />
-Iris V3-3 beeps old beep then the reject tone, unable to test new beep my device has old firmware
-* Arming the system again, after a minimum of 3 seconds, to a maximum of 15 seconds from the initial arming failure, forces the HSM system to Arm. When using the Centralitex Keypad driver an "Arming Forced" message is issued.
-
-5. Notice: Force Arming fails when attempting to arm using the Dashboard Mode. 
+Open the Windows Task Scheduler.
+1. on right side of screenc Click on Create Task
+show image
+2. Set name SmartUps, select "run weater user is logged in or not"
+3. Click Triggers, then click New
+show image
+4. Set Begin Task at Startup, set repeat every 10 minutes, Indefinitly, Set enabled, Click OK
+5. On top of screen click Actions, then click New
+Show image
+6. set Program/script to: cscript  
+7. set Arguments to C:\apcupsd\etc\apcupsd\smartUPS.VBS click OK
+show image
+8. Uncheck Start the task only if computer is on AC power
+9. Click OK on bottom of window, enter your windows password (not the pin)
+10. The task is created, test it by clicking Run, then reboot system to active
   
 [:arrow_up_small: Back to top](#top)
 <a name="testing"></a>
