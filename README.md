@@ -52,7 +52,8 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 3. Connect Hub power connector to a UPS Battery Back plug 
 3. [Install apcupds app](http://www.apcupsd.org), then setup apcupsd
 4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers 
-5. [Copy the five VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd
+5. [Copy the five VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd<br />
+Edit your hub's IP address in module smartUPS.VBS
 6. Create a virtual device using SmartUps driver, then set IP address to your Windows machine IP address. This should be a permanently reserved address in router. 
 7. Create a Windows Scheduled Task
 8. Reboot Windows system, then test
