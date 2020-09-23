@@ -130,7 +130,6 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
    * Click: Add Virtual Device
    * Set Device Name and Device Label to: APC UPS (or whatever you want)
    * Type: Select User driver - SmartUPS
-   * Set Event History to 5 (optional)
    * Click button: Save Device
    ----------------------------
    * Set IP Address of system running apcupsd
