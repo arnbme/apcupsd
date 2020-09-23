@@ -3,7 +3,7 @@
 # The Windows Centric Version 
 ## Table of Contents 
 [&ensp;1. Purpose](#purpose)<br />
-[&ensp;2. Features](#features)<br />
+[&ensp;2. Features](#require)<br />
 [&ensp;3. Features](#features)<br />
 [&ensp;4. Donate](#support)<br />
 [&ensp;5. Installation Overview](#installOver)<br />
@@ -22,14 +22,20 @@
 ## 1. Purpose
 Perform a graceful hub shutdown when power is lost.
 
-SmartUPS, Windows Centric Version, allows a Hubitat Hub plugged into an APC UPS, and using apcupsd.org's package on a Windows machine, to gracefully shut down during a power outage. This version is maintained by Arn Burkhoff was derived from Steve Wright's SmartUPS release.
+This version is maintained by Arn Burkhoff was derived from Steve Wright's APC UPS Monitor Driver release.
 
 [:arrow_up_small: Back to top](#top)
 
 <a name="require"></a>
 ## 2. Requirements
 * Hubitat Hub plugged into an APC UPS battery backup plug
-* apcupsd.org's package installed on a Windows machine, with an APC communication cable plugged into same machine's USB port
+* The APC communication cable plugged into a Windows machine's USB port
+* apcupsd.org's package installed on same Windows machine
+
+Should your APC UPS support WiFi [use LG Kahn's release](https://community.hubitat.com/t/apc-smartups-status-device/50456)<br />
+For Non-windows systems use [Steve Wright's APC UPS Monitor Driver](https://community.hubitat.com/t/release-apc-ups-monitor-driver/13092)
+
+[:arrow_up_small: Back to top](#top)
 
 <a name="features"></a>
 ## 3. Features<br />
