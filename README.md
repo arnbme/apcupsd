@@ -230,7 +230,7 @@ Additional notification rules for events onbattery and offbattery are strongly s
 <a name="keypadDH"></a>
 ## 12. Restarting the Hub after a graceful shutdown
 
-A Wifi plug between the UPS plug and the HE Hub power connector allows for a remote hub restart in case the Hub must be power cycled to restart after a graceful shutdown. This occurs when the Hub is gracefully shutdown, but never loses power. The hub must be power cycled to restart when power is restored.
+A Wifi plug between the UPS plug and the HE Hub power connector allows for a remote hub restart in case the Hub must be power cycled: power off, power on; to restart after a graceful shutdown when power is restored. This occurs when the Hub is gracefully shutdown, but never loses power. 
 
 When the Hub loses power, it will automatically restart when power is restored.
 
