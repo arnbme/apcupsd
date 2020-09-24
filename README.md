@@ -76,7 +76,7 @@ Edit your hub's IP address in module smartUPS.VBS
 7. [Create a Windows Scheduled Task](#windowstask)
 8. [Adjust Windows Power setings](#sleep)
 8. Reboot Windows system, then verify smartUPS.vbs is running on your selected schedule.
-9. [Review: Should I plug my computer into the UPS' battery backup][#plugin]
+9. [Review: Should I plug my computer into the UPS' battery backup](#plugin)
 
 [:arrow_up_small: Back to top](#top)
 
