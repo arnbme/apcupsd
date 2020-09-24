@@ -170,9 +170,9 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
 
 <a name="windowstask"></a>
 ## 9. Create a Windows Scheduled Task
-1. Open the Windows Task Sheduler
+1. Open the Windows Task Scheduler
    * Click on Windows task bar "search" icon
-   * Enter: Task Schedular
+   * Enter: Task Scheduler
    * Click on Run
    ------------
 2. Task Scheduler opens   
@@ -182,9 +182,9 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
    * On top of window click Triggers, then click New
    ------------
 3.  Set Triggers 
-    * Set Begin the tasl selector to: At Startup
+    * Set Begin the task selector to: At Startup
     * Check Delay task for, key in 3 minutes   
-    * Check Repeat task for, 10 minutes, for a duration of: Indefinitly, 
+    * Check Repeat task for, 10 minutes, for a duration of: Indefinitely 
     * Enabled should be set, Set enabled if not
     * Click OK
     * On top of screen click Actions, then click New
