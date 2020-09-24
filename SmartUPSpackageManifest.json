@@ -9,7 +9,7 @@
 	"drivers" : [
 		{
 			"id": "cff65300-252c-4e4b-8b2f-ac078c1d5fd6",
-			"name": "SmartUPS Driver",
+			"name": "SmartUPS",
 			"namespace": "arnbme",
 			"location": "https://raw.githubusercontent.com/arnbme/apcupsd/master/SmartUPS.groovy",
 			"required": true,
