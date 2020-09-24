@@ -172,6 +172,7 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
 
 <a name="windowstask"></a>
 ## 9. Create a Windows Scheduled Task
+Note: Event based Hub shutdown logic works without the scheduled task. This task is required should you want to shutdown the HUB based upon battery percentage or other UPS status fields. 
 1. Open the Windows Task Scheduler
    * Click on Windows task bar "search" icon
    * Enter: Task Scheduler
