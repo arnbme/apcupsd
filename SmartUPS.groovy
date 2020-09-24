@@ -13,6 +13,7 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *	The following changes by Arn Burkhoff
+ *  2020-09-24 V0.0.5 Change namespace to arnbme  
  *  2020-09-23 V0.0.4 Adjust setings positions and text  
  *  2020-09-22 V0.0.3 Add support for UPS "failing" event, UPS is about to shut down, add attribute lastEvent and store last event status  
  *  2020-09-21 V0.0.2 Add input setting for using VBS modules in windows 
@@ -24,7 +25,7 @@
 import groovy.json.JsonSlurper
 metadata
 {
-    definition (name: "SmartUPS", namespace: "shackrat", author: "Steve White")
+    definition (name: "SmartUPS", namespace: "arnbme", author: "Steve White")
     {
         capability "Battery"
 		capability "Voltage Measurement"
