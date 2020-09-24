@@ -23,7 +23,7 @@
 ## 1. Purpose
 **Perform a graceful Hub shutdown when power is lost.** 
 
-Developed for, and tested on a Windows 10 system, but may work on any system supporting apcupsd and Visual Basic Script. 
+Developed for, and tested on a Windows 10 system functioning as the interface between the APC UPS and the HE Hub, but may work on any system supporting apcupsd and Visual Basic Script.
 
 This version, maintained by Arn Burkhoff, was derived from Steve Wright's APC UPS Monitor Driver release, but does not use or require a PHP server.
 
@@ -48,8 +48,8 @@ For Non-windows systems consider [Steve Wright's APC UPS Monitor Driver](https:/
   * offbattery - mains power restored
   * failing - UPS about to shutdown
   * powerout - UPS switched to batteries (for any reason)
-* Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task.<br />
-* Support modules are Visual Basic Script, no Windows server required or used<br />
+* Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task.
+* Support modules are Visual Basic Script, no Windows server required or used
 * Executes without being logged in to Windows
 
 [:arrow_up_small: Back to top](#top)
