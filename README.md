@@ -68,7 +68,7 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 3. Connect Hub power connector to a UPS Battery Backup plug
    * Place a Wifi plug between the UPS and the Hub power connector, insuring a remote hub restart in some scenarios. I use a TP-Link Kasa plug.
 3. [Install apcupds app](http://www.apcupsd.org), then setup apcupsd
-4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers 
+4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers or use the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016) 
 5. [Copy the five VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd<br />
 Edit your hub's IP address in module smartUPS.VBS
 6. [Create a virtual device using SmartUps driver,](#vdevice) then set IP address to your Windows machine IP address. This IP address should be permanently reserved in your router.
