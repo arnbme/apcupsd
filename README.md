@@ -25,7 +25,7 @@
 
 Developed for, and tested on a Windows 10 system functioning as the interface between the APC UPS and the HE Hub, but may work on any system supporting apcupsd and Visual Basic Script.
 
-This version, maintained by Arn Burkhoff, was derived from Steve Wright's APC UPS Monitor Driver release, but does not use or require a PHP server.
+This package was derived from Steve Wright's APC UPS Monitor Driver release, but does not use or require a PHP server.
 
 [:arrow_up_small: Back to top](#top)
 
