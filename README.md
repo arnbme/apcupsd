@@ -14,9 +14,10 @@
 [11. Create RM Power Control Rule(s)](#rules)<br />
 [12. Restarting the Hub after a graceful shutdown](#restartHub)<br />
 [13. Restarting the Windows system after a shutdown](#restartWin)<br />
-[14. Uninstalling](#uninstall)<br />
-[15. Get Help, report an issue, or contact information](#help)<br />
-[16. Known Issues](#issues)
+[14. Should I plug my computer into the UPS' battery backup?](#plugin)<br />
+[15. Uninstalling](#uninstall)<br />
+[16. Get Help, report an issue, or contact information](#help)<br />
+[17. Known Issues](#issues)
 
 <a name="purpose"></a>
 ## 1. Purpose
@@ -75,6 +76,7 @@ Edit your hub's IP address in module smartUPS.VBS
 7. [Create a Windows Scheduled Task](#windowstask)
 8. [Adjust Windows Power setings](#sleep)
 8. Reboot Windows system, then verify smartUPS.vbs is running on your selected schedule.
+9. [Review: Should I plug my computer into the UPS' battery backup][#plugin]
 
 [:arrow_up_small: Back to top](#top)
 
@@ -239,8 +241,16 @@ Some links
 
 [:arrow_up_small: Back to top](#top)
 
+<a name="plugin"></a>
+## 14. Should I plug my computer into the UPS' battery backup?
+
+<table><tr><th>
+<th>Computer has Batteries<th>Computer Plugged into UPS<th>Results <tr><td>1.<td>Yes<td>Yes<td>Ideal, computer shuts down at event 'failing" or when computer batteries reach low level after "failing" event<tr><td>2.<td>Yes<td>No<td>May work, may not. Computer's batteries must last longer than UPS power<tr><td>3.<td>No<td>No<td>It will never work, computer dies at power failure <tr><td>4.<td>No<td>Yes<td>Works, computer shuts down at event 'failing" </tr></table>
+ 
+ [:arrow_up_small: Back to top](#top)
+
 <a name="uninstall"></a>
-## 14. Uninstalling
+## 15. Uninstalling
 1. Delete scheduled task<br />
 2. Uninstall apcupsd<br />
 3. Remove SmartUPS virtual device<br />
@@ -248,7 +258,7 @@ Some links
 
 [:arrow_up_small: Back to top](#top)
 <a name="help"></a>
-## 15. Get Help, report an issue, and contact information
+## 16. Get Help, report an issue, and contact information
 * [Use the HE Community's SmartUps VBS Version forum](https://community.hubitat.com/t/release-nyckelharpa/15062) to request assistance, or to report an issue. Direct private messages to user @arnb
 
 [:arrow_up_small: Back to top](#top)
