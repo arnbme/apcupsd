@@ -222,6 +222,7 @@ Unless you can figure out a way to wake the machine as needed
 <a name="rules"></a>
 ## 11. Prepare RM Power Control rule
 ![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPowerBattery.png)
+
 ![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPowerShutdown.png)
 
 [:arrow_up_small: Back to top](#top)
