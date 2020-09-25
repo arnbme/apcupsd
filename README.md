@@ -119,8 +119,8 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
     <td>Windows C:apcupsd/etc/apsupsd</td>
   </tr>
   <tr>
-    <td>powerout.vbs</td>
-    <td>apcupsd powerout event hanler</td>
+    <td>doshutdown.vbs</td>
+    <td>apcupsd UPS is shutting down handler</td>
     <td>Windows C:apcupsd/etc/apsupsd</td>
   </tr>
 </table> 
@@ -220,8 +220,10 @@ Unless you can figure out a way to wake the machine as needed
 
 
 <a name="rules"></a>
-## 11. Prepare RM Power Control rule
-![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPower2.png)
+## 11. Prepare RM Power Control rules
+![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPowerBattery.png)
+
+![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPowerShutdown.png)
 
 [:arrow_up_small: Back to top](#top)
 <a name="keypadDH"></a>
