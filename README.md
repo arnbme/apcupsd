@@ -220,11 +220,8 @@ Unless you can figure out a way to wake the machine as needed
 
 
 <a name="rules"></a>
-## 11. Prepare RM Power Control rule(s)
-Additional notification rules for events onbattery and offbattery are strongly suggested. 
-
+## 11. Prepare RM Power Control rule
 ![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPower.png)
-
 
 [:arrow_up_small: Back to top](#top)
 <a name="keypadDH"></a>
