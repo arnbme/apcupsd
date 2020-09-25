@@ -10,20 +10,22 @@
 [&ensp;7. Create Virtual Device](#vdevice)<br />
 [&ensp;8. Testing](#testing)<br />
 [&ensp;9. Create a Windows Scheduler Task](#windowstask)<br />
-[10. Create RM Power Control Rule(s)](#rules)<br />
-[11. Restarting the Hub after a graceful shutdown](#restartHub)<br />
-[12. Restarting the Windows system after a shutdown](#restartWin)<br />
-[13. Uninstalling](#uninstall)<br />
-[14. Get Help, report an issue, or contact information](#help)<br />
-[15. Known Issues](#issues)
+[10. Adjust Windows Power Settings](#sleep)<br />
+[11. Create RM Power Control Rule(s)](#rules)<br />
+[12. Restarting the Hub after a graceful shutdown](#restartHub)<br />
+[13. Restarting the Windows system after a shutdown](#restartWin)<br />
+[14. Should I plug my computer into the UPS' battery backup?](#plugin)<br />
+[15. Uninstalling](#uninstall)<br />
+[16. Get Help, report an issue, or contact information](#help)<br />
+[17. Known Issues](#issues)
 
 <a name="purpose"></a>
 ## 1. Purpose
 **Perform a graceful Hub shutdown when power is lost.** 
 
-Developed for, and tested on a Windows 10 system, but may work on any system supporting Visual Basic Script. 
+Developed for, and tested on a Windows 10 system functioning as the interface between the APC UPS and the HE Hub, but may work on any system supporting apcupsd and Visual Basic Script.
 
-This version, maintained by Arn Burkhoff, was derived from Steve Wright's APC UPS Monitor Driver release, but does not use or require a PHP server.
+This package was derived from Steve Wright's APC UPS Monitor Driver release, but does not use or require a PHP server.
 
 [:arrow_up_small: Back to top](#top)
 
@@ -46,8 +48,8 @@ For Non-windows systems consider [Steve Wright's APC UPS Monitor Driver](https:/
   * offbattery - mains power restored
   * failing - UPS about to shutdown
   * powerout - UPS switched to batteries (for any reason)
-* Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task.<br />
-* Support modules are Visual Basic Script, no Windows server required or used<br />
+* Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task.
+* Support modules are Visual Basic Script, no Windows server required or used
 * Executes without being logged in to Windows
 
 [:arrow_up_small: Back to top](#top)
@@ -66,13 +68,15 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 3. Connect Hub power connector to a UPS Battery Backup plug
    * Place a Wifi plug between the UPS and the Hub power connector, insuring a remote hub restart in some scenarios. I use a TP-Link Kasa plug.
 3. [Install apcupds app](http://www.apcupsd.org), then setup apcupsd
-4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers 
+4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers or use the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016) 
 5. [Copy the five VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd<br />
 Edit your hub's IP address in module smartUPS.VBS
 6. [Create a virtual device using SmartUps driver,](#vdevice) then set IP address to your Windows machine IP address. This IP address should be permanently reserved in your router.
 7. [Test the VBS scripts and Hubitat SmartUPS device](#testing)
 7. [Create a Windows Scheduled Task](#windowstask)
+8. [Adjust Windows Power setings](#sleep)
 8. Reboot Windows system, then verify smartUPS.vbs is running on your selected schedule.
+9. [Review: Should I plug my computer into the UPS' battery backup](#plugin)
 
 [:arrow_up_small: Back to top](#top)
 
@@ -115,8 +119,8 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
     <td>Windows C:apcupsd/etc/apsupsd</td>
   </tr>
   <tr>
-    <td>powerout.vbs</td>
-    <td>apcupsd powerout event hanler</td>
+    <td>doshutdown.vbs</td>
+    <td>apcupsd UPS is shutting down handler</td>
     <td>Windows C:apcupsd/etc/apsupsd</td>
   </tr>
 </table> 
@@ -168,9 +172,10 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
 
 <a name="windowstask"></a>
 ## 9. Create a Windows Scheduled Task
-1. Open the Windows Task Sheduler
+Note: Event based Hub shutdown works without the scheduled task. However, this task is required should you want to shutdown the HUB based upon battery percentage or other UPS status fields, or want UPS statistics displayed in the driver. 
+1. Open the Windows Task Scheduler
    * Click on Windows task bar "search" icon
-   * Enter: Task Schedular
+   * Enter: Task Scheduler
    * Click on Run
    ------------
 2. Task Scheduler opens   
@@ -180,9 +185,9 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
    * On top of window click Triggers, then click New
    ------------
 3.  Set Triggers 
-    * Set Begin the tasl selector to: At Startup
+    * Set Begin the task selector to: At Startup
     * Check Delay task for, key in 3 minutes   
-    * Check Repeat task for, 10 minutes, for a duration of: Indefinitly, 
+    * Check Repeat task for, 10 minutes, for a duration of: Indefinitely 
     * Enabled should be set, Set enabled if not
     * Click OK
     * On top of screen click Actions, then click New
@@ -205,31 +210,45 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
 7. Activate task by Rebooting system
 
 [:arrow_up_small: Back to top](#top)
+
+<a name="sleep"></a>
+## 10. Adjust Windows Power Settings
+* On Power and Batteries change "Put Computer to Sleep" to Never
+Unless you can figure out a way to wake the machine as needed
+
+[:arrow_up_small: Back to top](#top)
+
+
 <a name="rules"></a>
-## 10. Prepare RM Power Control rule(s)
-Additional notification rules for events onbattery and offbattery are strongly suggested. 
-
-![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPower.png)
-
+## 11. Prepare RM Power Control rule
+![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPower2.png)
 
 [:arrow_up_small: Back to top](#top)
 <a name="keypadDH"></a>
-## 11. Restarting the Hub after a graceful shutdown
+## 12. Restarting the Hub after a graceful shutdown
 
-A Wifi plug between the UPS plug and the HE Hub power connector allows for a remote hub restart in case the Hub must be power cycled to restart after a graceful shutdown. This occurs when the Hub is gracefully shutdown, but never loses power. The hub must be power cycled to restart when power is restored.
+A Wifi plug between the UPS plug and the HE Hub power connector allows for a remote hub restart in case the Hub must be power cycled: power off, power on; to restart after a graceful shutdown when power is restored. This occurs when the Hub is gracefully shutdown, but never loses power. 
 
 When the Hub loses power, it will automatically restart when power is restored.
 
 <a name="restartWin"></a>
-## 12. Restarting the Windows system after a shutdown
+## 13. Restarting the Windows system after a shutdown
 Some links
    * https://www.technewsworld.com/story/78930.html
    * https://www.technewsworld.com/story/86034.html
 
 [:arrow_up_small: Back to top](#top)
 
+<a name="plugin"></a>
+## 14. Should I plug my computer into the UPS' battery backup?
+
+<table><tr><th>
+<th>Computer has Batteries<th>Computer Plugged into UPS<th>Results <tr><td>1.<td>Yes<td>Yes<td>Ideal, computer shuts down at event 'failing" or when computer batteries reach low level after "failing" event<tr><td>2.<td>Yes<td>No<td>May work, may not. Computer's batteries must last longer than UPS power<tr><td>3.<td>No<td>No<td>It will never work, computer dies at power failure <tr><td>4.<td>No<td>Yes<td>Works, computer shuts down at event 'failing" </tr></table>
+ 
+ [:arrow_up_small: Back to top](#top)
+
 <a name="uninstall"></a>
-## 13. Uninstalling
+## 15. Uninstalling
 1. Delete scheduled task<br />
 2. Uninstall apcupsd<br />
 3. Remove SmartUPS virtual device<br />
@@ -237,15 +256,15 @@ Some links
 
 [:arrow_up_small: Back to top](#top)
 <a name="help"></a>
-## 14. Get Help, report an issue, and contact information
-* [Use the HE Community's SmartUps VBS Version forum](https://community.hubitat.com/t/release-nyckelharpa/15062) to request assistance, or to report an issue. Direct private messages to user @arnb
+## 16. Get Help, report an issue, and contact information
+* [Use the HE Community's SmartUps VBS Version forum](https://community.hubitat.com/t/beta-release-smartups-vbs-version/51487) to request assistance, or to report an issue. Direct private messages to user @arnb
 
 [:arrow_up_small: Back to top](#top)
 
 <a name="issues"></a>
-## 15. Known Issues
+## 17. Known Issues
 * The SmartUPS device Refresh command does nothing because no server is available for communications
-* The device's non-functional Cancel, Pause, Set Time Remaining, Start, and Stop are inserted by the Hubitat system, and throw an error when clicked.   
+* The device's non-functional commands: Cancel, Pause, Set Time Remaining, Start, and Stop are inserted by the Hubitat system, and throw an error when clicked.   
 
 
 [:arrow_up_small: Back to top](#top)
