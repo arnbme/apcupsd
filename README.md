@@ -83,7 +83,7 @@ Edit your hub's IP address in module smartUPS.VBS
 <a name="modules"></a>
 ## 6. SmartUPS Driver and VBS modules
 
-There are five VBS scripts and a one Groovy Device Handler (DH) associated with this app stored in a Github respitory. You may also install he Groovy module using the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016). The VBS scripts must be copied to C:/apcupsd/etc/apcupsd from Github
+There are four VBS scripts and a one Groovy Device Handler (DH) associated with this app stored in a Github respitory. You may also install he Groovy module using the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016). The VBS scripts must be copied to C:/apcupsd/etc/apcupsd from Github
 * After or prior to installing smartUPS.vbs
   * edit the module
   * change hubitatHubIp = "http://192.168.0.106:39501/notify" to the your hub's IP address
@@ -111,11 +111,6 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
   </tr>  <tr>
     <td>offbattery.vbs</td>
     <td>apcupsd offbattery event handler</td>
-    <td>Windows C:apcupsd/etc/apsupsd</td>
-  </tr>
-  <tr>
-    <td>failing.vbs</td>
-    <td>apcupsd failing event handler</td>
     <td>Windows C:apcupsd/etc/apsupsd</td>
   </tr>
   <tr>
@@ -156,7 +151,8 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
 2. Test smartUPS.vbs as follows
    * in command window enter: cscript C:\apcupsd\etc\apcupsd\smartUPS.vbs then click Enter key 
    * verify hub's APC UPS device statistics were updated
-3. Test the four event scripts
+   
+3. Test the three VBS event scripts
    * on command line enter: cscript C:\apcupsd\etc\apcupsd\onbattery.vbs then click Enter key<br />
      Hub device attribute results: PowerSouce: battery; lastEvent: onbattery
      
@@ -164,9 +160,25 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
      Hub device attribute results: PowerSouce: mains; lastEvent: offbattery
    * on command line enter: cscript C:\apcupsd\etc\apcupsd\powerout.vbs then click Enter key<br />
      Hub device attribute results: PowerSouce: battery; lastEvent: onbattery   
-   * on command line enter: cscript C:\apcupsd\etc\apcupsd\failing.vbs then click Enter key<br />
+   * on command line enter: cscript C:\apcupsd\etc\apcupsd\doshutdown.vbs then click Enter key<br />
      Hub device attribute results: PowerSouce: battery; lastEvent: failing<br />
-     When the RM example rule is installed the hub gracefully shuts down. Restart the Hub with a power cycle: power off, power on.   
+     When the RM example rule is installed the hub gracefully shuts down. Restart the Hub with a power cycle: power off, power on.
+     
+ 4. Live testing a power outage
+ This should gracefully shutdown your windows machine and Hubitat Hub
+    * *The RM power rules in section 11 must be coded and active before doing this test* 
+    * For safety make backups of your hub and windows machine. I've tested many times without doing this, but you never know.
+    * Make a backup copy of file C:/apcupsd/etc/apcupsd/apcupsd.conf
+    * Edit file C:/apcupsd/etc/apcupsd/apcupsd.conf
+    * Change setting: BATTERYLEVEL to 95
+    * Change setting: MINUTES to your current UPS remaining time - 5 minutes
+    * Save the file
+    * You will either have to reboot, or stop and restart apcupsd to apply the settings. I've only been successful with rebooting.
+    * Remove power from the UPS, WAIT.
+    * After a succesful test, repower the UPS, power cycle the HUB, restart windows.
+    * Edit file C:/apcupsd/etc/apcupsd/apcupsd.conf
+    * Change BATTERYLEVEL to 5, MINUTES to 3, Save
+    * Reboot or cycle apcupsd to apply settings
 
 [:arrow_up_small: Back to top](#top)
 
