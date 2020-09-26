@@ -101,7 +101,7 @@ There are four VBS scripts and a one Groovy Device Handler (DH) associated with 
   </tr>
   <tr>
     <td>SmartUPS.groovy</td>
-    <td>UPS device handler. Controls communication from UPS to Hub</td>
+    <td>UPS device handler. Controls communication from UPS to Hub *Requires Modification</td>
     <td>Hubitat Drivers</td>
   </tr>
   <tr>
@@ -120,7 +120,7 @@ There are four VBS scripts and a one Groovy Device Handler (DH) associated with 
   </tr>
   <tr>
     <td>doshutdown.vbs</td>
-    <td>apcupsd UPS is shutting down handler</td>
+    <td>apcupsd UPS is shutting down handler *Requires Modification </td>
     <td>Windows C:apcupsd/etc/apsupsd</td>
   </tr>
 </table> 
