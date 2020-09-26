@@ -90,8 +90,9 @@ There are four VBS scripts and a one Groovy Device Handler (DH) associated with 
 * After or prior to installing smartUPS.vbs
   * edit the module
   * change hubitatHubIp = "http://192.168.0.106:39501/notify" to the your hub's IP address
-  * For example, your hub's IP is 192.168.1.3 the new statement is hubitatHubIp = "http://192.168.1.3:39501/notify" 
-  * Determine the time in seconds it takes to complete a manual hub shutdown. Set this (value + 10) * 1000 into script doshutdown.vbs Wscrip.sleep statement, save 
+  * For example, your hub's IP is 192.168.1.3 the new statement is hubitatHubIp = "http://192.168.1.3:39501/notify" *
+* After or prior to installing doshutdown.vbs
+  * Determine the time in seconds it takes to complete a manual hub shutdown. Set this (shutdown_seconds + 10) * 1000 into the WScript.Sleep statement
  <table style="width:100%">
   <tr>
     <th>Module Name</th>
