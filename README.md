@@ -247,6 +247,8 @@ When the Hub loses power, it will automatically restart when power is restored.
 
 <a name="restartWin"></a>
 ## 13. Restarting the Windows system after a shutdown
+This requires changing the computer's BIOS settings
+
 Some links
    * https://www.technewsworld.com/story/78930.html
    * https://www.technewsworld.com/story/86034.html
