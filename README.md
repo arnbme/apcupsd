@@ -289,7 +289,7 @@ Some links
 Solution: Click the checkmark on the dashboard screen
 * Hub does not complete shutdown prior to power shutoff
   * Try setting apcupsd.conf ANNOY to a higher number
-  * Try setting KILLDElAY to something
+  * Try setting apcupsd.conf KILLDELAY to something
   * Adjust file doshutdown.vbs: change Wscript.sleep value to a a higher number. It's milliseconds. 
 
 
