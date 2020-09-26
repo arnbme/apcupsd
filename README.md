@@ -61,6 +61,7 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 
 <a name="installOver"></a>
 ## 5. Installation Overview
+Take a deep breath, hold it, exhale. This is a substantial process.
 1. Uninstall APC PowerChute, if installed
 
 2. Connect APC UPS supplied cable to a USB port
@@ -68,13 +69,16 @@ This app is free. However, if you like it, derived benefit from it, and want to 
    * Place a Wifi plug between the UPS and the Hub power connector, insuring a remote hub restart in some scenarios. I use a TP-Link Kasa plug.
 3. [Install apcupds app](http://www.apcupsd.org), then setup apcupsd
 4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers or use the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016) 
-5. [Copy the five VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd<br />
+5. [Copy the four VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd<br />
 Edit your hub's IP address in module smartUPS.VBS
 6. [Create a virtual device using SmartUps driver,](#vdevice) then set IP address to your Windows machine IP address. This IP address should be permanently reserved in your router.
+6. [Create the RM for Battery and Shutdown](#rules)
 7. [Test the VBS scripts and Hubitat SmartUPS device](#testing)
 7. [Create a Windows Scheduled Task](#windowstask)
 8. [Adjust Windows Power setings](#sleep)
-8. Reboot Windows system, then verify smartUPS.vbs is running on your selected schedule.
+8. Reboot Windows system, then verify smartUPS.vbs is running on your scheduled task timing.
+8. [Run a live power shutdown test](#testing)
+8. [Set windows to reboot when power is restored](#restartWin)
 9. [Review: Should I plug my computer into the UPS' battery backup](#plugin)
 
 [:arrow_up_small: Back to top](#top)
