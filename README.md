@@ -278,7 +278,9 @@ Some links
 <a name="issues"></a>
 ## 17. Known Issues
 * The SmartUPS device Refresh command does nothing because no server is available for communications
-* The device's non-functional commands: Cancel, Pause, Set Time Remaining, Start, and Stop are inserted by the Hubitat system, and throw an error when clicked.   
+* The device's non-functional commands: Cancel, Pause, Set Time Remaining, Start, and Stop are inserted by the Hubitat system, and throw an error when clicked.
+* After a graceful shutdown, followed by Windows and Hub reboot, the SmartUPS statistic to not update when displayed on a dashboard. 
+Solution: Click the checkmark on the dashboard screen
 
 
 [:arrow_up_small: Back to top](#top)
