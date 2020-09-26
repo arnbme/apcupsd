@@ -13,11 +13,12 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *	The following changes by Arn Burkhoff
+ *  2020-09-26 V0.0.6 Update lastEvent on Device status update, add doshutdown event, default unknown event power to battery  
  *  2020-09-24 V0.0.5 Change namespace to arnbme  
  *  2020-09-23 V0.0.4 Adjust setings positions and text  
- *  2020-09-22 V0.0.3 Add support for UPS "failing" event, UPS is about to shut down, add attribute lastEvent and store last event status  
+ *  2020-09-22 V0.0.3 Add support for UPS "failing" event, UPS is about to shut down, add attribute lastEvent and store last event status
  *  2020-09-21 V0.0.2 Add input setting for using VBS modules in windows 
- *                            Mostly informational for user, but does not send hub commands on Device refresh			
+ *                            Mostly informational for user, but cannot at this time send command to hub for info			
  *  2020-09-19 V0.0.1 Add support for direct send of VBS scripts from Windows apcupsd trigger scripts eliminating need for a Windows PHP server
  *                            add log.error when message is not accepted.
  *                            Note VBS wont send Referer header. Accept a VBReferer header
@@ -168,7 +169,7 @@ def parse(String description)
 		else log.error "ABORTING DUE TO UNKNOWN EVENT"
 	}
     else
-        log.error "SmartUps Unknown message received Referer:${msg?.headers?.Referer}  VBReferer:${msg?.headers?.VBReferer} body: ${msg?.body}" 
+        if (enableDebug) log.error "SmartUps Unknown message received Referer:${msg?.headers?.Referer}  VBReferer:${msg?.headers?.VBReferer} body: ${msg?.body}" 
 }
 
 
@@ -180,7 +181,8 @@ def updatePowerStatus(status)
 				status == "onbattery" ? "battery" : 
 					status == "offbattery" ? "mains" : 
 						status == "failing" ? "battery" : 
-						"mains"
+							status == "doshutdown" ? "battery" : 
+						"battery"
 
 	sendEvent(name: "lastEvent", value: status,displayed: this.currentLastEvent != lastEvent ? true : false)
 	sendEvent(name: "powerSource", value: powerSource, displayed: this.currentPowerSource != powerSource ? true : false)
@@ -205,6 +207,15 @@ def updateDeviceStatus(data)
     	data.status == "ONLINE" ? "mains" : 
         	data.status == "ONBATT" ? "battery" : 
             	"mains"
+
+//	update lastEvent as necessary
+	def lastEvent
+	if (powerSource=='mains')
+		lastEvent = 'offbattery'
+	else
+		lastEvent = 'onbattery'
+	if (lastEvent != device.currentValue('lastEvent'))	
+		sendEvent(name: "lastEvent", value: lastEvent)
 
 	// Calculate wattage as a percentage of nominal load
     power = ((loadPercent / 100) * nomPower)
