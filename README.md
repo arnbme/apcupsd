@@ -46,8 +46,7 @@ For Non-windows systems consider [Steve Wright's APC UPS Monitor Driver](https:/
 * Reports UPS Device Events in  Hubitat virtual device attribute, lastEvent
   * onbattery - mains power failed
   * offbattery - mains power restored
-  * failing - UPS about to shutdown
-  * powerout - UPS switched to batteries (for any reason)
+  * doshutdown - UPS about to shutdown
 * Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task.
 * Support modules are Visual Basic Script, no Windows server required or used
 * Executes without being logged in to Windows
@@ -62,6 +61,7 @@ This app is free. However, if you like it, derived benefit from it, and want to 
 
 <a name="installOver"></a>
 ## 5. Installation Overview
+Take a deep breath, hold it, exhale. This is a substantial process.
 1. Uninstall APC PowerChute, if installed
 
 2. Connect APC UPS supplied cable to a USB port
@@ -69,13 +69,16 @@ This app is free. However, if you like it, derived benefit from it, and want to 
    * Place a Wifi plug between the UPS and the Hub power connector, insuring a remote hub restart in some scenarios. I use a TP-Link Kasa plug.
 3. [Install apcupds app](http://www.apcupsd.org), then setup apcupsd
 4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers or use the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016) 
-5. [Copy the five VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd<br />
+5. [Copy the four VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd<br />
 Edit your hub's IP address in module smartUPS.VBS
 6. [Create a virtual device using SmartUps driver,](#vdevice) then set IP address to your Windows machine IP address. This IP address should be permanently reserved in your router.
+6. [Create the RM for Battery and Shutdown](#rules)
 7. [Test the VBS scripts and Hubitat SmartUPS device](#testing)
 7. [Create a Windows Scheduled Task](#windowstask)
 8. [Adjust Windows Power setings](#sleep)
-8. Reboot Windows system, then verify smartUPS.vbs is running on your selected schedule.
+8. Reboot Windows system, then verify smartUPS.vbs is running on your scheduled task timing.
+8. [Run a live power shutdown test](#testing)
+8. [Set windows to reboot when power is restored](#restartWin)
 9. [Review: Should I plug my computer into the UPS' battery backup](#plugin)
 
 [:arrow_up_small: Back to top](#top)
@@ -83,11 +86,13 @@ Edit your hub's IP address in module smartUPS.VBS
 <a name="modules"></a>
 ## 6. SmartUPS Driver and VBS modules
 
-There are five VBS scripts and a one Groovy Device Handler (DH) associated with this app stored in a Github respitory. You may also install he Groovy module using the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016). The VBS scripts must be copied to C:/apcupsd/etc/apcupsd from Github
+There are four VBS scripts and a one Groovy Device Handler (DH) associated with this app stored in a Github respitory. You may also install he Groovy module using the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016). The VBS scripts must be copied to C:/apcupsd/etc/apcupsd from Github
 * After or prior to installing smartUPS.vbs
   * edit the module
   * change hubitatHubIp = "http://192.168.0.106:39501/notify" to the your hub's IP address
-  * For example, your hub's IP is 192.168.1.3 the new statement is hubitatHubIp = "http://192.168.1.3:39501/notify" 
+  * For example, your hub's IP is 192.168.1.3 the new statement is hubitatHubIp = "http://192.168.1.3:39501/notify" *
+* After or prior to installing doshutdown.vbs
+  * Determine the time in seconds it takes to complete a manual hub shutdown. Set this (shutdown_seconds + 10) * 1000 into the WScript.Sleep statement. The supplied value is 30000, 30 seconds.
  <table style="width:100%">
   <tr>
     <th>Module Name</th>
@@ -96,7 +101,7 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
   </tr>
   <tr>
     <td>SmartUPS.groovy</td>
-    <td>UPS device handler. Controls communication from UPS to Hub</td>
+    <td>UPS device handler. Controls communication from UPS to Hub *Requires Modification</td>
     <td>Hubitat Drivers</td>
   </tr>
   <tr>
@@ -114,13 +119,8 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
     <td>Windows C:apcupsd/etc/apsupsd</td>
   </tr>
   <tr>
-    <td>failing.vbs</td>
-    <td>apcupsd failing event handler</td>
-    <td>Windows C:apcupsd/etc/apsupsd</td>
-  </tr>
-  <tr>
     <td>doshutdown.vbs</td>
-    <td>apcupsd UPS is shutting down handler</td>
+    <td>apcupsd UPS is shutting down handler *Requires Modification </td>
     <td>Windows C:apcupsd/etc/apsupsd</td>
   </tr>
 </table> 
@@ -156,7 +156,8 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
 2. Test smartUPS.vbs as follows
    * in command window enter: cscript C:\apcupsd\etc\apcupsd\smartUPS.vbs then click Enter key 
    * verify hub's APC UPS device statistics were updated
-3. Test the four event scripts
+   
+3. Test the three VBS event scripts
    * on command line enter: cscript C:\apcupsd\etc\apcupsd\onbattery.vbs then click Enter key<br />
      Hub device attribute results: PowerSouce: battery; lastEvent: onbattery
      
@@ -164,9 +165,25 @@ There are five VBS scripts and a one Groovy Device Handler (DH) associated with 
      Hub device attribute results: PowerSouce: mains; lastEvent: offbattery
    * on command line enter: cscript C:\apcupsd\etc\apcupsd\powerout.vbs then click Enter key<br />
      Hub device attribute results: PowerSouce: battery; lastEvent: onbattery   
-   * on command line enter: cscript C:\apcupsd\etc\apcupsd\failing.vbs then click Enter key<br />
+   * on command line enter: cscript C:\apcupsd\etc\apcupsd\doshutdown.vbs then click Enter key<br />
      Hub device attribute results: PowerSouce: battery; lastEvent: failing<br />
-     When the RM example rule is installed the hub gracefully shuts down. Restart the Hub with a power cycle: power off, power on.   
+     When the RM example rule is installed the hub gracefully shuts down. Restart the Hub with a power cycle: power off, power on.
+     
+ 4. Live testing a power outage
+ This should gracefully shutdown your windows machine and Hubitat Hub
+    * *The RM power rules in section 11 must be coded and active before doing this test* 
+    * For safety make backups of your hub and windows machine. I've tested many times without doing this, but you never know.
+    * Make a backup copy of file C:/apcupsd/etc/apcupsd/apcupsd.conf
+    * Edit file C:/apcupsd/etc/apcupsd/apcupsd.conf
+    * Change setting: BATTERYLEVEL to 95
+    * Change setting: MINUTES to your current UPS remaining time - 5 minutes
+    * Save the file
+    * You will either have to reboot, or stop and restart apcupsd to apply the settings. I've only been successful with rebooting.
+    * Remove power from the UPS, WAIT.
+    * After a succesful test, repower the UPS, power cycle the HUB, restart windows.
+    * Edit file C:/apcupsd/etc/apcupsd/apcupsd.conf
+    * Change BATTERYLEVEL to 5, MINUTES to 3, Save
+    * Reboot or cycle apcupsd to apply settings
 
 [:arrow_up_small: Back to top](#top)
 
@@ -220,8 +237,9 @@ Unless you can figure out a way to wake the machine as needed
 
 
 <a name="rules"></a>
-## 11. Prepare RM Power Control rule
+## 11. Prepare RM Power Control rules
 ![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPowerBattery.png)
+![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPowerLocals.png)
 
 ![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPowerShutdown.png)
 
@@ -235,6 +253,8 @@ When the Hub loses power, it will automatically restart when power is restored.
 
 <a name="restartWin"></a>
 ## 13. Restarting the Windows system after a shutdown
+This requires changing the computer's BIOS settings
+
 Some links
    * https://www.technewsworld.com/story/78930.html
    * https://www.technewsworld.com/story/86034.html
@@ -265,8 +285,14 @@ Some links
 
 <a name="issues"></a>
 ## 17. Known Issues
-* The SmartUPS device Refresh command does nothing because no server is available for communications
-* The device's non-functional commands: Cancel, Pause, Set Time Remaining, Start, and Stop are inserted by the Hubitat system, and throw an error when clicked.   
+* The SmartUPS device Refresh command does nothing because no Windows server (AFAIK) is available for communications or executing a remote VBS script. 
+* The device's non-functional commands: Cancel, Pause, Set Time Remaining, Start, and Stop are inserted by the Hubitat system, and throw an error when clicked.
+* After a graceful shutdown, followed by Windows and Hub reboot, the SmartUPS statistics to not update when displayed on a dashboard. 
+Solution: Click the checkmark on the dashboard screen
+* Hub does not complete shutdown prior to power shutoff
+  * Try setting apcupsd.conf ANNOY to a higher number
+  * Try setting apcupsd.conf KILLDELAY to something
+  * Adjust file doshutdown.vbs: change Wscript.sleep value to a a higher number. It's milliseconds. 
 
 
 [:arrow_up_small: Back to top](#top)
