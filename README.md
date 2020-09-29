@@ -297,9 +297,10 @@ Some links
 
 <a name="uninstall"></a>
 ## 16. Uninstalling
-1. Delete scheduled task<br />
-2. Uninstall apcupsd<br />
-3. Remove SmartUPS virtual device<br />
+1. Delete Windows scheduled task
+2. Uninstall apcupsd from Windows
+3. Uninstall EventGhost from Windows
+3. Remove SmartUPS virtual device
 4. Remove SmartUPS from Devices code
 
 [:arrow_up_small: Back to top](#top)
