@@ -325,7 +325,7 @@ Some links
 * The SmartUPS device Refresh command does nothing when EventGhost is not installed.
 
 * The device's non-functional commands: Cancel, Pause, Set Time Remaining, Start, and Stop are inserted by the Hubitat system, and throw an error when clicked.
-* After a graceful shutdown, followed by Windows and Hub reboot, the SmartUPS statistics to not update when displayed on a Fully dashboard. 
+* After a graceful shutdown, followed by Windows and Hub reboot, Fully dashboards do not update.
 Solution: Click the checkmark on the dashboard screen or use the following 
 ![image RM refresh](https://github.com/arnbme/apcupsd/blob/master/images/RMrefresh.png)
 * Hub does not complete shutdown prior to power shutoff
