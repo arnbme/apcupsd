@@ -10,7 +10,7 @@
 [&ensp;7. Create Virtual Device](#vdevice)<br />
 [&ensp;8. Testing](#testing)<br />
 [&ensp;9. Create a Windows Scheduler Task](#windowstask)<br />
-[10. Install EventGhost, set statistics timer](#eventGhost)<br />
+[10. Install EventGhost](#eventGhost)<br />
 [11. Adjust Windows Power Settings](#sleep)<br />
 [12. Create RM Power Control Rule(s)](#rules)<br />
 [13. Restarting the Hub after a graceful shutdown](#restartHub)<br />
@@ -190,7 +190,7 @@ There are four VBS scripts and a one Groovy Device Handler (DH) associated with 
 
 <a name="windowstask"></a>
 ## 9. Create a Windows Scheduled Task
-Note: Event based Hub shutdown works without the scheduled task. However, this task is required should you want to shutdown the HUB based upon battery percentage or other UPS status fields, or want UPS statistics displayed in the driver. 
+Note: Event based Hub shutdown works without the scheduled task. However, the Windows Scheduled Task or EventGhost is required should you want to shutdown the HUB based upon battery percentage or other UPS status fields, or want UPS statistics displayed in the driver. 
 1. Open the Windows Task Scheduler
    * Click on Windows task bar "search" icon
    * Enter: Task Scheduler
@@ -230,7 +230,9 @@ Note: Event based Hub shutdown works without the scheduled task. However, this t
 [:arrow_up_small: Back to top](#top)
 
 <a name="eventGhost"></a>
-## 10. Install EventGhost, Set Statistics Timer
+## 10. Install EventGhost
+Note: Event based Hub shutdown works without EventGhost. However, EventGhost or the Windows Scheduled Task is required should you want to shutdown the HUB based upon battery percentage or other UPS status fields, or want UPS statistics displayed in the driver. 
+
 1.  Install [EventGhost](http://www.eventghost.net)
 
 2.  Activate the Webserver plugin
