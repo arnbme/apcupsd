@@ -10,14 +10,15 @@
 [&ensp;7. Create Virtual Device](#vdevice)<br />
 [&ensp;8. Testing](#testing)<br />
 [&ensp;9. Create a Windows Scheduler Task](#windowstask)<br />
-[10. Adjust Windows Power Settings](#sleep)<br />
-[11. Create RM Power Control Rule(s)](#rules)<br />
-[12. Restarting the Hub after a graceful shutdown](#restartHub)<br />
-[13. Restarting the Windows system after a shutdown](#restartWin)<br />
-[14. Should I plug my computer into the UPS' battery backup?](#plugin)<br />
-[15. Uninstalling](#uninstall)<br />
-[16. Get Help, report an issue, or contact information](#help)<br />
-[17. Known Issues](#issues)
+[10. Install EventGhost](#eventGhost)<br />
+[11. Adjust Windows Power Settings](#sleep)<br />
+[12. Create RM Power Control Rule(s)](#rules)<br />
+[13. Restarting the Hub after a graceful shutdown](#restartHub)<br />
+[14. Restarting the Windows system after a shutdown](#restartWin)<br />
+[15. Should I plug my computer into the UPS' battery backup?](#plugin)<br />
+[16. Uninstalling](#uninstall)<br />
+[17. Get Help, report an issue, or contact information](#help)<br />
+[18. Known Issues](#issues)
 
 <a name="purpose"></a>
 ## 1. Purpose
@@ -47,8 +48,8 @@ For Non-windows systems consider [Steve Wright's APC UPS Monitor Driver](https:/
   * onbattery - mains power failed
   * offbattery - mains power restored
   * doshutdown - UPS about to shutdown
-* Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task.
-* Support modules are Visual Basic Script, no Windows server required or used
+* Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task or optional EventGhost webserver plugin.
+* Support modules are Visual Basic Script
 * Executes without being logged in to Windows
 
 [:arrow_up_small: Back to top](#top)
@@ -74,7 +75,7 @@ Edit your hub's IP address in module smartUPS.VBS
 6. [Create a virtual device using SmartUps driver,](#vdevice) then set IP address to your Windows machine IP address. This IP address should be permanently reserved in your router.
 6. [Create the RM for Battery and Shutdown](#rules)
 7. [Test the VBS scripts and Hubitat SmartUPS device](#testing)
-7. [Create a Windows Scheduled Task](#windowstask)
+7. [Create a Windows Scheduled Task](#windowstask)<br />OR<br />[Install EventGhost](#eventGhost)
 8. [Adjust Windows Power setings](#sleep)
 8. Reboot Windows system, then verify smartUPS.vbs is running on your scheduled task timing.
 8. [Run a live power shutdown test](#testing)
@@ -189,7 +190,7 @@ There are four VBS scripts and a one Groovy Device Handler (DH) associated with 
 
 <a name="windowstask"></a>
 ## 9. Create a Windows Scheduled Task
-Note: Event based Hub shutdown works without the scheduled task. However, this task is required should you want to shutdown the HUB based upon battery percentage or other UPS status fields, or want UPS statistics displayed in the driver. 
+Note: Event based Hub shutdown works without the scheduled task. However, the Windows Scheduled Task or EventGhost is required should you want to shutdown the HUB based upon battery percentage or other UPS status fields, or want UPS statistics displayed in the driver. 
 1. Open the Windows Task Scheduler
    * Click on Windows task bar "search" icon
    * Enter: Task Scheduler
@@ -228,16 +229,53 @@ Note: Event based Hub shutdown works without the scheduled task. However, this t
 
 [:arrow_up_small: Back to top](#top)
 
+<a name="eventGhost"></a>
+## 10. Install EventGhost
+Note: Event based Hub shutdown works without EventGhost. However, EventGhost or the Windows Scheduled Task is required should you want to shutdown the HUB based upon battery percentage or other UPS status fields, or want UPS statistics displayed in the driver. 
+
+1.  Install [EventGhost](http://www.eventghost.net)
+
+2.  Activate the Webserver plugin
+     * Highlight Autostart, right click Add Plugin, select webserver
+     * Unless you know what you are doing leave it at port 80
+      * In the HTML document root: field enter C:/www
+      * Do not change: Event Prefix: HTML  Realm: EventGhost
+      * Click OK
+     * The www directory name is inconsequential as long as it matches what is entered into the webserver's document root field
+3.  Create directory C:/www
+     * Create file index.html with the following
+     * `<HTML><BODY></BODY></HTML>`
+
+4.  Highlight the computer name at the top of  Configuration column
+5.   create a folder: name is smarttUPS (or your choice)
+6.  highlight the folder  then Add a Macro in the newly created folder
+     * Expand System, select Run Command
+     * Enter the windows command cscript C:/apcupsd/etc/apcupsd/smartUPS.vbs 
+     * Click Test
+     * When it works, click OK  
+     * This is now a Macro, with an Action 
+7.  From a web browser enter 127.0.0.1?HE.smartUPS
+      * * If you get a 404, not found, see steps 2 and 3 above
+8.  In the EventGhost event log you should see an event: HTTP.smartUPS[]
+9.  Drag the HTTP event to the newly created Macro. It may look like it's not going, but once you stop dragging it will show up in the macro. That is the trigger
+10. Reenter the URL 127.0.0.1?HE.smartUPS from the browser, enter
+11. Script smartUPS.vbs should run
+12. Click the refresh button in the SmartUPS device page
+13. The script should run
+
+[:arrow_up_small: Back to top](#top)
+
 <a name="sleep"></a>
-## 10. Adjust Windows Power Settings
+## 11. Adjust Windows Power Settings
 * On Power and Batteries change "Put Computer to Sleep" to Never
 Unless you can figure out a way to wake the machine as needed
 
 [:arrow_up_small: Back to top](#top)
 
 
+
 <a name="rules"></a>
-## 11. Prepare RM Power Control rules
+## 12. Prepare RM Power Control rules
 ![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPowerBattery.png)
 ![image RM Power](https://github.com/arnbme/apcupsd/blob/master/images/RMPowerLocals.png)
 
@@ -245,14 +283,14 @@ Unless you can figure out a way to wake the machine as needed
 
 [:arrow_up_small: Back to top](#top)
 <a name="keypadDH"></a>
-## 12. Restarting the Hub after a graceful shutdown
+## 13. Restarting the Hub after a graceful shutdown
 
 A Wifi plug between the UPS plug and the HE Hub power connector allows for a remote hub restart in case the Hub must be power cycled: power off, power on; to restart after a graceful shutdown when power is restored. This occurs when the Hub is gracefully shutdown, but never loses power. 
 
 When the Hub loses power, it will automatically restart when power is restored.
 
 <a name="restartWin"></a>
-## 13. Restarting the Windows system after a shutdown
+## 14. Restarting the Windows system after a shutdown
 This requires changing the computer's BIOS settings
 
 Some links
@@ -262,7 +300,7 @@ Some links
 [:arrow_up_small: Back to top](#top)
 
 <a name="plugin"></a>
-## 14. Should I plug my computer into the UPS' battery backup?
+## 15. Should I plug my computer into the UPS' battery backup?
 
 <table><tr><th>
 <th>Computer has Batteries<th>Computer Plugged into UPS<th>Results <tr><td>1.<td>Yes<td>Yes<td>Ideal, computer shuts down at event 'failing" or when computer batteries reach low level after "failing" event<tr><td>2.<td>Yes<td>No<td>May work, may not. Computer's batteries must last longer than UPS power<tr><td>3.<td>No<td>No<td>It will never work, computer dies at power failure <tr><td>4.<td>No<td>Yes<td>Works, computer shuts down at event 'failing" </tr></table>
@@ -270,29 +308,32 @@ Some links
  [:arrow_up_small: Back to top](#top)
 
 <a name="uninstall"></a>
-## 15. Uninstalling
-1. Delete scheduled task<br />
-2. Uninstall apcupsd<br />
-3. Remove SmartUPS virtual device<br />
+## 16. Uninstalling
+1. Delete Windows scheduled task
+2. Uninstall apcupsd from Windows
+3. Uninstall EventGhost from Windows
+3. Remove SmartUPS virtual device
 4. Remove SmartUPS from Devices code
 
 [:arrow_up_small: Back to top](#top)
 <a name="help"></a>
-## 16. Get Help, report an issue, and contact information
+## 17. Get Help, report an issue, and contact information
 * [Use the HE Community's SmartUps VBS Version forum](https://community.hubitat.com/t/beta-release-smartups-vbs-version/51487) to request assistance, or to report an issue. Direct private messages to user @arnb
 
 [:arrow_up_small: Back to top](#top)
 
 <a name="issues"></a>
-## 17. Known Issues
-* The SmartUPS device Refresh command does nothing because no Windows server (AFAIK) is available for communications or executing a remote VBS script. 
+## 18. Known Issues
+* The SmartUPS device Refresh command does nothing when EventGhost is not installed.
+
 * The device's non-functional commands: Cancel, Pause, Set Time Remaining, Start, and Stop are inserted by the Hubitat system, and throw an error when clicked.
-* After a graceful shutdown, followed by Windows and Hub reboot, the SmartUPS statistics to not update when displayed on a dashboard. 
-Solution: Click the checkmark on the dashboard screen
+* After a graceful shutdown, followed by Windows and Hub reboot, Fully dashboards do not update.
+Solution: Click the checkmark on the dashboard screen or use the following 
+![image RM refresh](https://github.com/arnbme/apcupsd/blob/master/images/RMrefresh.png)
 * Hub does not complete shutdown prior to power shutoff
+  * Adjust file doshutdown.vbs: change Wscript.sleep value to a a higher number. It's milliseconds. 
   * Try setting apcupsd.conf ANNOY to a higher number
   * Try setting apcupsd.conf KILLDELAY to something
-  * Adjust file doshutdown.vbs: change Wscript.sleep value to a a higher number. It's milliseconds. 
-
+  
 
 [:arrow_up_small: Back to top](#top)
