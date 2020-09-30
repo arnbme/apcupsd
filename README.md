@@ -16,7 +16,7 @@
 [13. Restarting the Hub after a graceful shutdown](#restartHub)<br />
 [14. Restarting the Windows system after a shutdown](#restartWin)<br />
 [15. Should I plug my computer into the UPS' battery backup?](#plugin)<br />
-[15. Uninstalling](#uninstall)<br />
+[16. Uninstalling](#uninstall)<br />
 [17. Get Help, report an issue, or contact information](#help)<br />
 [18. Known Issues](#issues)
 
@@ -322,7 +322,8 @@ Some links
 
 <a name="issues"></a>
 ## 18. Known Issues
-* The SmartUPS device Refresh command is not available if EventGhost is not installed. 
+* The SmartUPS device Refresh command does nothing when EventGhost is not installed.
+
 * The device's non-functional commands: Cancel, Pause, Set Time Remaining, Start, and Stop are inserted by the Hubitat system, and throw an error when clicked.
 * After a graceful shutdown, followed by Windows and Hub reboot, the SmartUPS statistics to not update when displayed on a dashboard. 
 Solution: Click the checkmark on the dashboard screen
