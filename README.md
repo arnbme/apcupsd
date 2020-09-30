@@ -48,8 +48,8 @@ For Non-windows systems consider [Steve Wright's APC UPS Monitor Driver](https:/
   * onbattery - mains power failed
   * offbattery - mains power restored
   * doshutdown - UPS about to shutdown
-* Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task.
-* Support modules are Visual Basic Script, no Windows server required or used
+* Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task or optional EventGhost webserver plugin.
+* Support modules are Visual Basic Script
 * Executes without being logged in to Windows
 
 [:arrow_up_small: Back to top](#top)
