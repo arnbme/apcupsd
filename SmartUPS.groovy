@@ -13,6 +13,9 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *	The following changes by Arn Burkhoff
+ *  2020-09-29 V0.0.7 Enable Refresh command by using EventGhost on Windows to run smartUPS.vbs. Readme document has setup instructions
+ *	                           add setting for the port number to use something other than 80 when another server runs on the windows machine
+ *                            add settings EventGhost rerfresh timing in minutes, eliminating need for windows task scheduler								
  *  2020-09-26 V0.0.6 Update lastEvent on Device status update, add doshutdown event, default unknown event power to battery  
  *  2020-09-24 V0.0.5 Change namespace to arnbme  
  *  2020-09-23 V0.0.4 Adjust setings positions and text  
@@ -62,16 +65,19 @@ metadata
 	{	
 		section("Device")
 		{
-			input("ip", "string", title:"IP Address of apcupsd host system (Windows computer)", defaultValue: "192.168.nnn.nnn" ,required: true, displayDuringSetup: true)		
+			input("ip", "string", title:"IP Address of apcupsd host system (Windows computer)", defaultValue: "192.168.nnn.nnn" ,required: true)		
+			input("port", "number", title:"Port Number used by optional Windows EventGhost web server", defaultValue: 80, range: 1..65535, required: true)		
+		}
+		section
+		{
+			input "prefEventGhost", "bool", required: true, defaultValue: false,
+				title: "ON: EventGhost is installed on Windows, enables Refresh command, and Hub controlled statistics updates<br />OFF (Default): Use Windows Task Scheduler for statistics, Refresh command disabled"
+			if (prefEventGhost)
+				input("prefRefreshMinutes", "number", title:"EventGhost update time in minutes, set to zero to disable updates", defaultValue: 5, range: 0..20, required: true)		
 		}
 		section
 		{
 			input "enableDebug", "bool", title: "Enables debug logging for 30 minutes", defaultValue: false, required: false
-		}
-		section("Use Windows with VBS")
-		{
-			input "globalVBS", "bool", required: true, defaultValue: true,
-				title: "ON (Default): Using VBS with a Windows computer. Disables refresh command<br />OFF: Using standard PHP server interface"
 		}
 	}
 }
@@ -113,22 +119,21 @@ def reset()
 
 def refresh()
 {
-if (!globalVBS)
-	{		
-	// Initiate local LAN request
-	def hubAction = new hubitat.device.HubAction(
-			method: "GET",
-			path: "/cz/hubitat/SmartUPS.php?p=1",
-			headers: [
-				HOST: ip + ":80",
-					"Content-Type":"application/json",
-					Accept: "*/*",
-				],
-			body: query
-		)
-	if (enableDebug) log.debug "Requesting update from APC service... at "
-	sendHubCommand(hubAction)
-	}
+	if (enableDebug) log.debug "Entered Refresh"
+	if (settings.prefEventGhost)
+		{
+		def egCommand = java.net.URLEncoder.encode("HE.smartUPS")
+		def egHost = "${settings.ip}:${settings.port}" 
+		if (enableDebug) log.debug "Sending Refresh to Windows EventGhost at $egHost"
+		sendHubCommand(new hubitat.device.HubAction("""GET /?$egCommand HTTP/1.1\r\nHOST: $egHost\r\n\r\n""", hubitat.device.Protocol.LAN))
+		if (prefRefreshMinutes && prefRefreshMinutes > 0)
+			{
+			if (enableDebug) log.debug "Refresh scheduled $prefRefreshMinutes ${prefRefreshMinutes * 60}"
+			unschedule(refresh)
+			runIn(prefRefreshMinutes*60, refresh) 
+
+			}
+		}
 }
 
 
@@ -143,7 +148,6 @@ def parse(String description)
 		if (enableDebug) log.debug "Updating DNI to MAC ${msg.mac}..."
 		device.deviceNetworkId = msg.mac
 	}
-
 	// Response to a push notification
 	if ((msg?.headers?.Referer == "apcupsd" || msg?.headers?.VBReferer == "apcupsd") && msg?.body)
     {
@@ -155,7 +159,7 @@ def parse(String description)
 		// Response to an event notification
         if (json?.data?.event)
 		{
-			log.info "Push notification for UPS event [${json?.data?.event}] detected."
+			log.info "SmartUPS Push notification for UPS event [${json?.data?.event}] detected."
 			
 			// Update the child device if it's monitored
 			updatePowerStatus(json.data.event)
@@ -166,7 +170,7 @@ def parse(String description)
 			if (enableDebug) log.info "Device update received."
 			updateDeviceStatus(json.data.device)
 		}
-		else log.error "ABORTING DUE TO UNKNOWN EVENT"
+		else log.error "SmartUPS ABORTING DUE TO UNKNOWN EVENT"
 	}
     else
         if (enableDebug) log.error "SmartUps Unknown message received Referer:${msg?.headers?.Referer}  VBReferer:${msg?.headers?.VBReferer} body: ${msg?.body}" 
