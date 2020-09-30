@@ -73,7 +73,7 @@ metadata
 			input "prefEventGhost", "bool", required: true, defaultValue: false,
 				title: "ON: EventGhost is installed on Windows, enables Refresh command, and Hub controlled statistics updates<br />OFF (Default): Use Windows Task Scheduler for statistics, Refresh command disabled"
 			if (prefEventGhost)
-				input("prefRefreshMinutes", "number", title:"EventGhost update time in minutes, set to zero to disable updates", defaultValue: 5, range: 0..20, required: true)		
+				input("prefRefreshMinutes", "number", title:"EventGhost update time in minutes, zero disables EventGhost updates. For example when using Windows Scheduler updates", defaultValue: 5, range: 0..20, required: true)		
 		}
 		section
 		{
