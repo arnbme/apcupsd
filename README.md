@@ -234,22 +234,32 @@ Note: Event based Hub shutdown works without the scheduled task. However, this t
 1.  Install [EventGhost](http://www.eventghost.net)
 
 2.  Activate the Webserver plugin
-3.  Highlight the computer name at the top of  Configuration column
-4.   create a folder: name is smarttUPS (or your choice)
-5.  highlight the folder  then Add a Macro in the newly created folder
+     * Highlight Autostart, right click Add Plugin, select webserver
+     * Unless you know what you are doing leave it at port 80
+      * In the HTML document root: field enter C:/www
+      * Do not change: Event Prefix: HTML  Realm: EventGhost
+      * Click OK
+     * The www directory name is inconsequential as long as it matches what is entered into the webserver's document root field
+3.  Create directory C:/www
+     * Create file index.html with the following
+     * `<HTML><BODY></BODY></HTML>`
+
+4.  Highlight the computer name at the top of  Configuration column
+5.   create a folder: name is smarttUPS (or your choice)
+6.  highlight the folder  then Add a Macro in the newly created folder
      * Expand System, select Run Command
      * Enter the windows command cscript C:/apcupsd/etc/apcupsd/smartUPS.vbs 
      * Click Test
      * When it works, click OK  
      * This is now a Macro, with an Action 
-6.  From a web browser enter 127.0.0.1?HE.smartUPS
-      * ignore the 404 error
-7.  In the EventGhost event log you should see an event: HTTP.smartUPS[]
-8.  Drag the HTTP event to the newly created Macro. It may look like it's not going, but once you stop dragging it will show up in the macro. That is the trigger
-9. Reenter the URL 127.0.0.1?HE.smartUPS from the browser, enter
-10. Script smartUPS.vbs should run
-10. Click the refresh button in the SmartUPS device page
-11. The script should run
+7.  From a web browser enter 127.0.0.1?HE.smartUPS
+      * * If you get a 404, not found, see steps 2 and 3 above
+8.  In the EventGhost event log you should see an event: HTTP.smartUPS[]
+9.  Drag the HTTP event to the newly created Macro. It may look like it's not going, but once you stop dragging it will show up in the macro. That is the trigger
+10. Reenter the URL 127.0.0.1?HE.smartUPS from the browser, enter
+11. Script smartUPS.vbs should run
+12. Click the refresh button in the SmartUPS device page
+13. The script should run
 
 [:arrow_up_small: Back to top](#top)
 
