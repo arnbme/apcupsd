@@ -5,7 +5,7 @@
 	"dateReleased": "2020-09-24",
 	"documentationLink": "https://github.com/arnbme/apcupsd/blob/master/README.md",
 	"communityLink": "https://community.hubitat.com/t/beta-release-smartups-vbs-version/51487",
-	"releaseNotes": "V007 add EventGhost support. SmartUPS VBS version, Windows centric. Gracefully shut down the Hub during a power failure, using Windows to communicate between the UPS and Hub.",
+	"releaseNotes": "V008 fix HE log error\r\n V007 add EventGhost support. SmartUPS VBS version, Windows centric. Gracefully shut down the Hub during a power failure, using Windows to communicate between the UPS and Hub.",
 	"drivers" : [
 		{
 			"id": "cff65300-252c-4e4b-8b2f-ac078c1d5fd6",
@@ -13,7 +13,7 @@
 			"namespace": "arnbme",
 			"location": "https://raw.githubusercontent.com/arnbme/apcupsd/master/SmartUPS.groovy",
 			"required": true,
-			"version": "0.0.7"
+			"version": "0.0.8"
 		}
 	]
 }
