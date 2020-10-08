@@ -13,6 +13,15 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *	The following changes by Arn Burkhoff
+ *  2020-10-08 V0.0.8 Errors logged in hubitat log when apcupsd status was COMMLOST. Windows app apcupsd somehow loses contact UPS device
+ *							   Resolution: When device response is not ONLINE, update attribute lastEvent to json.data.device.status and issue a log.warn
+ *                            Consider triggering a windows restart command or VBS script after nn (user provided) bad responses 
+ *
+ *								 Option Explicit
+ *								 Dim objShell
+ *								 Set objShell = WScript.CreateObject("WScript.Shell")
+ *								objShell.Run "C:\WINDOWS\system32\shutdown.exe -r -t 0"
+ * 
  *  2020-09-29 V0.0.7 Enable Refresh command by using EventGhost on Windows to run smartUPS.vbs. Readme document has setup instructions
  *	                           add setting for the port number to use something other than 80 when another server runs on the windows machine
  *                            add settings EventGhost rerfresh timing in minutes, eliminating need for windows task scheduler								
@@ -168,7 +177,13 @@ def parse(String description)
 		else if (json?.data?.device)
 		{
 			if (enableDebug) log.info "Device update received."
-			updateDeviceStatus(json.data.device)
+			if (json.data.device.status == 'ONLINE')
+				updateDeviceStatus(json.data.device)
+			else
+				{
+				sendEvent(name: "lastEvent", value: json.data.device.status)
+				log.warn "SmartUPS ${json.data.device.upsname} driver is ${json.data.device.status}"
+				}
 		}
 		else log.error "SmartUPS ABORTING DUE TO UNKNOWN EVENT"
 	}
