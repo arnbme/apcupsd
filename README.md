@@ -70,7 +70,7 @@ Take a deep breath, hold it, exhale. This is a substantial process.
    * Place a Wifi plug between the UPS and the Hub power connector, insuring a remote hub restart in some scenarios. I use a TP-Link Kasa plug.
 3. [Install apcupds app](http://www.apcupsd.org), then setup apcupsd
 4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers or use the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016) 
-5. [Copy the four VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd<br />
+5. [Copy the six VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd<br />
 Edit your hub's IP address in module smartUPS.VBS
 6. [Create a virtual device using SmartUps driver,](#vdevice) then set IP address to your Windows machine IP address. This IP address should be permanently reserved in your router.
 6. [Create the RM for Battery and Shutdown](#rules)
@@ -122,6 +122,16 @@ There are four VBS scripts and a one Groovy Device Handler (DH) associated with 
   <tr>
     <td>doshutdown.vbs</td>
     <td>apcupsd UPS is shutting down handler *Requires Modification </td>
+    <td>Windows C:apcupsd/etc/apsupsd</td>
+  </tr>
+ <tr>
+    <td>commfailure.vbs</td>
+    <td>apcupsd communication lost event handler</td>
+    <td>Windows C:apcupsd/etc/apsupsd</td>
+  </tr>
+ <tr>
+    <td>commok.vbs</td>
+    <td>apcupsd communication restored event handler</td>
     <td>Windows C:apcupsd/etc/apsupsd</td>
   </tr>
 </table> 
