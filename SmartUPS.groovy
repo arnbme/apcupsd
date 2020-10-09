@@ -13,6 +13,7 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *	The following changes by Arn Burkhoff
+ *  2020-10-09 V0.0.9 Add support for any event including newly added commfailure.vbs, sends event as COMMLOST, and commok.vbs
  *  2020-10-08 V0.0.8 Errors logged in hubitat log when apcupsd status was COMMLOST. Windows app apcupsd somehow loses contact UPS device
  *							   Resolution: When device response is not ONLINE, update attribute lastEvent to json.data.device.status and issue a log.warn
  *                            Consider triggering a windows restart command or VBS script after nn (user provided) bad responses 
@@ -94,14 +95,15 @@ metadata
 
 def installed()
 {
-	log.info "Shackrats apcupsd UPS Monitor - UPS Installed"
+	log.info "SmartUPS Installed with settings: ${settings}"
 	initialize()
+	refresh()
 }
 
 
 def updated()
 {
-	log.info "Shackrats apcupsd UPS Monitor - UPS Updated"
+	log.info "SmartUPS Updated with settings: ${settings}"
 	initialize()
 	refresh()
 }
@@ -110,7 +112,6 @@ def updated()
 def initialize()
 {
     unschedule()
-	log.info "Shackrats apcupsd UPS Monitor - UPS Initialized."
 
 	if (enableDebug)
 	{
@@ -118,7 +119,6 @@ def initialize()
 		runIn(1800, logsOff)
 	}
 }
-
 
 def reset()
 {
@@ -194,20 +194,28 @@ def parse(String description)
 
 def updatePowerStatus(status)
 {
-	def powerSource =
-		status == "mainsback" ? "mains" : 
-			status == "powerout" ? "battery" : 
-				status == "onbattery" ? "battery" : 
-					status == "offbattery" ? "mains" : 
-						status == "failing" ? "battery" : 
-							status == "doshutdown" ? "battery" : 
-						"battery"
-
-	sendEvent(name: "lastEvent", value: status,displayed: this.currentLastEvent != lastEvent ? true : false)
-	sendEvent(name: "powerSource", value: powerSource, displayed: this.currentPowerSource != powerSource ? true : false)
+	def powerSource='unknown'
+	switch (status)
+		{
+		case 'mainsback':
+		case 'offbattery':
+			powerSource = 'mains'
+			break
+		case 'onbattery':
+		case 'failing':
+		case 'doshutdown':
+		case 'powerout':
+			powerSource = 'battery'
+			break
+		}
+	sendEvent(name: "lastEvent", value: status)
+	sendEvent(name: "powerSource", value: powerSource)
     
     if (powerSource == "mains") sendEvent(name: "sessionStatus", value: "stopped", displayed: this.currentSessionStatus != sessionStatus ? true : false)
     else if (powerSource == "battery") sendEvent(name: "sessionStatus", value: "running", displayed: this.currentSessionStatus != sessionStatus ? true : false)
+
+	if (status == 'commok')			//communication restored update device information
+		refresh()
 }
 
 
