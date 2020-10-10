@@ -13,6 +13,7 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *	The following changes by Arn Burkhoff
+ *  2020-10-10 V0.1.0 Add command to reboot the Windows machine with EventGhost command rebootWindows
  *  2020-10-09 V0.0.9 Add support for any event including newly added commfailure.vbs, sends event as COMMLOST, and commok.vbs
  *  2020-10-08 V0.0.8 Errors logged in hubitat log when apcupsd status was COMMLOST. Windows app apcupsd somehow loses contact UPS device
  *							   Resolution: When device response is not ONLINE, update attribute lastEvent to json.data.device.status and issue a log.warn
@@ -45,7 +46,7 @@ metadata
 		capability "Voltage Measurement"
 		capability "Power Source"
 		capability "Power Meter"
-		capability "Timed Session"
+//		capability "Timed Session"
 		capability "Refresh"
 		
 		attribute "loadPercent", "string"
@@ -69,6 +70,7 @@ metadata
 		attribute "lastEvent", "string"
         
 		command "refresh"
+		command "rebootWindows"
 	}
 
 	preferences
@@ -81,9 +83,9 @@ metadata
 		section
 		{
 			input "prefEventGhost", "bool", required: true, defaultValue: false,
-				title: "ON: EventGhost is installed on Windows, enables Refresh command, and Hub controlled statistics updates<br />OFF (Default): Use Windows Task Scheduler for statistics, Refresh command disabled"
+				title: "ON: EventGhost is installed on Windows, enables commands Refresh and rebootWindows, and optional Hub controlled statistics updates<br />OFF (Default): Use Windows Task Scheduler for statistics, Refresh command disabled"
 			if (prefEventGhost)
-				input("prefRefreshMinutes", "number", title:"EventGhost update time in minutes, zero disables EventGhost updates. For example when using Windows Scheduler updates", defaultValue: 5, range: 0..20, required: true)		
+				input("prefRefreshMinutes", "number", title:"EventGhost update time in minutes, zero disables EventGhost updates, however Refresh is active. When using Windows Scheduler for updates, set to 0", defaultValue: 5, range: 0..20, required: true)		
 		}
 		section
 		{
@@ -144,6 +146,14 @@ def refresh()
 			}
 		}
 }
+
+def rebootWindows()
+	{
+	log.warn "SmartUPS rebootWindows command entered"
+	def egCommand = java.net.URLEncoder.encode("HE.rebootWindows")
+	def egHost = "${settings.ip}:${settings.port}" 
+	sendHubCommand(new hubitat.device.HubAction("""GET /?$egCommand HTTP/1.1\r\nHOST: $egHost\r\n\r\n""", hubitat.device.Protocol.LAN))
+	}
 
 
 def parse(String description)
@@ -214,7 +224,7 @@ def updatePowerStatus(status)
     if (powerSource == "mains") sendEvent(name: "sessionStatus", value: "stopped", displayed: this.currentSessionStatus != sessionStatus ? true : false)
     else if (powerSource == "battery") sendEvent(name: "sessionStatus", value: "running", displayed: this.currentSessionStatus != sessionStatus ? true : false)
 
-	if (status == 'commok')			//communication restored update device information
+	if (status == 'commok' || status == 'reboot')			//communication restored or windows rebooted update device information
 		refresh()
 }
 
