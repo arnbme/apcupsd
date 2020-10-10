@@ -255,9 +255,9 @@ Note: Event based Hub shutdown works without EventGhost. However, EventGhost or 
 3.  Create directory C:/www
      * Create file index.html with the following
      * `<HTML><BODY></BODY></HTML>`
-
+4.  **Create Device Status Macro
 4.  Highlight the computer name at the top of  Configuration column
-5.   create a folder: name is smarttUPS (or your choice)
+5.  create a folder: name is smarttUPS (or your choice)
 6.  highlight the folder  then Add a Macro in the newly created folder
      * Expand System, select Run Command
      * Enter the windows command cscript C:/apcupsd/etc/apcupsd/smartUPS.vbs 
@@ -272,6 +272,21 @@ Note: Event based Hub shutdown works without EventGhost. However, EventGhost or 
 11. Script smartUPS.vbs should run
 12. Click the refresh button in the SmartUPS device page
 13. The script should run
+14. **Setup Windows Reboot Macro**
+6.  Highlight the SmartUPS folder, then Add a Macro in the newly created folder
+     * Expand System, select Run Command
+     * Enter the windows command cscript C:/apcupsd/etc/apcupsd/smartUPS.vbs 
+     * Save it, Click test, windows should reboot
+     * return to EventGhost after reboot 
+     * This is now a Macro, with an Action 
+7.  From a web browser enter 127.0.0.1?HE.rebootWindows
+      * * If you get a 404, not found, see steps 2 and 3 above
+8.  In the EventGhost event log you should see an event: HTTP.rebootWindows[]
+9.  Drag the HTTP event to the newly created Macro. It may look like it's not going, but once you stop dragging it will show up in the macro. That is the trigger
+10. Save or lose it on reboot
+10. Reenter URL 127.0.0.1?HE.rebootWindows from the browser, enter
+11. Window should restart, return to EventGhost
+12. Click the rebootWindows button in the SmartUPS device page to test
 
 [:arrow_up_small: Back to top](#top)
 
@@ -334,9 +349,7 @@ Some links
 
 <a name="issues"></a>
 ## 18. Known Issues
-* The SmartUPS device Refresh command does nothing when EventGhost is not installed.
-
-* The device's non-functional commands: Cancel, Pause, Set Time Remaining, Start, and Stop are inserted by the Hubitat system, and throw an error when clicked.
+* The SmartUPS device commands Refresh and rebootWindows do nothing when EventGhost is not installed and setup.
 * After a graceful shutdown, followed by Windows and Hub reboot, Fully dashboards do not update.
 Solution: Click the checkmark on the dashboard screen or use the following 
 ![image RM refresh](https://github.com/arnbme/apcupsd/blob/master/images/RMrefresh.png)
