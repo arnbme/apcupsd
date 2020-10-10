@@ -255,7 +255,7 @@ Note: Event based Hub shutdown works without EventGhost. However, EventGhost or 
 3.  Create directory C:/www
      * Create file index.html with the following
      * `<HTML><BODY></BODY></HTML>`
-4.  **Create Device Status Macro
+4.  **Create Device Status Macro**
 4.  Highlight the computer name at the top of  Configuration column
 5.  create a folder: name is smarttUPS (or your choice)
 6.  highlight the folder  then Add a Macro in the newly created folder
@@ -273,9 +273,10 @@ Note: Event based Hub shutdown works without EventGhost. However, EventGhost or 
 12. Click the refresh button in the SmartUPS device page
 13. The script should run
 14. **Setup Windows Reboot Macro**
+     * [shutdown.exe documentation](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/shutdown)
 6.  Highlight the SmartUPS folder, then Add a Macro in the newly created folder
      * Expand System, select Run Command
-     * Enter the windows command cscript C:/apcupsd/etc/apcupsd/smartUPS.vbs 
+     * Enter the windows command: shutdown.exe    /f  /r /t 0
      * Save it, Click test, windows should reboot
      * return to EventGhost after reboot 
      * This is now a Macro, with an Action 
