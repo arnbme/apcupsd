@@ -48,9 +48,11 @@ For Non-windows systems consider [Steve Wright's APC UPS Monitor Driver](https:/
   * onbattery - mains power failed
   * offbattery - mains power restored
   * doshutdown - UPS about to shutdown
+  * COMMLOST - apcupsd lost UPS communication 
+  * commok - apcupsd UPS communication restored  
 * Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task or optional EventGhost webserver plugin.
 * Support modules are Visual Basic Script
-* Executes without being logged in to Windows
+* Executes without being logged in to Windows when using Windows Task Scheduler for triggering device statistics
 
 [:arrow_up_small: Back to top](#top)
 <a name="support"></a>
