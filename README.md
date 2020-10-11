@@ -53,6 +53,7 @@ For Non-windows systems consider [Steve Wright's APC UPS Monitor Driver](https:/
 * Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task or optional EventGhost webserver plugin.
 * Support modules are Visual Basic Script
 * Executes without being logged in to Windows when using Windows Task Scheduler for triggering device statistics
+* Remotely reboot Windows machine from HE
 
 [:arrow_up_small: Back to top](#top)
 <a name="support"></a>
