@@ -48,9 +48,12 @@ For Non-windows systems consider [Steve Wright's APC UPS Monitor Driver](https:/
   * onbattery - mains power failed
   * offbattery - mains power restored
   * doshutdown - UPS about to shutdown
+  * COMMLOST - apcupsd lost UPS communication 
+  * commok - apcupsd UPS communication restored  
 * Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task or optional EventGhost webserver plugin.
 * Support modules are Visual Basic Script
-* Executes without being logged in to Windows
+* Executes without being logged in to Windows when using Windows Task Scheduler for triggering device statistics
+* Remotely reboot Windows machine from HE
 
 [:arrow_up_small: Back to top](#top)
 <a name="support"></a>
@@ -67,7 +70,7 @@ Take a deep breath, hold it, exhale. This is a substantial process.
 
 2. Connect APC UPS supplied cable to a USB port
 3. Connect Hub power connector to a UPS Battery Backup plug
-   * Place a Wifi plug between the UPS and the Hub power connector, insuring a remote hub restart in some scenarios. I use a TP-Link Kasa plug.
+   * Place a Wifi plug between the UPS and the Hub power connector, insuring ability to remotely restart the hub when it's shutdown, but never loses power. I use a TP-Link Kasa plug with the Kasa app.
 3. [Install apcupds app](http://www.apcupsd.org), then setup apcupsd
 4. [Install module SmartUPS.groovy](#modules) from Github repository into Hub's Drivers or use the [Hubitat Package Manager](https://community.hubitat.com/t/beta-hubitat-package-manager/38016) 
 5. [Copy the six VBS modules](#modules) from Github repository to Windows directory C:/apcupsd/etc/apcupsd<br />
