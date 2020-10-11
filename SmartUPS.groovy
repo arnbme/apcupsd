@@ -13,6 +13,8 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *	The following changes by Arn Burkhoff
+ *  2020-10-11 V0.1.1 Add initialize() command and capability to restart polling on HUB reboot. 
+ *								rename existing initialize command to settingsInitialize
  *  2020-10-10 V0.1.0 Add command to reboot the Windows machine with EventGhost command rebootWindows
  *  2020-10-09 V0.0.9 Add support for any event including newly added commfailure.vbs, sends event as COMMLOST, and commok.vbs
  *  2020-10-08 V0.0.8 Errors logged in hubitat log when apcupsd status was COMMLOST. Windows app apcupsd somehow loses contact UPS device
@@ -48,6 +50,7 @@ metadata
 		capability "Power Meter"
 //		capability "Timed Session"
 		capability "Refresh"
+		capability "Initialize"
 		
 		attribute "loadPercent", "string"
         attribute "model", "string"
@@ -98,7 +101,7 @@ metadata
 def installed()
 {
 	log.info "SmartUPS Installed with settings: ${settings}"
-	initialize()
+	settingsInitialize()
 	refresh()
 }
 
@@ -106,12 +109,12 @@ def installed()
 def updated()
 {
 	log.info "SmartUPS Updated with settings: ${settings}"
-	initialize()
+	settingsInitialize()
 	refresh()
 }
 
 
-def initialize()
+def settingsInitialize()
 {
     unschedule()
 
@@ -122,9 +125,16 @@ def initialize()
 	}
 }
 
+//	runs when HUB boots, starting the device refresh cycle, if any
+void initialize()
+	{
+	log.info "SmartUPS restarting"
+	refresh()
+	}
+
 def reset()
 {
-	initialize()
+	settingsInitialize()
 }
 
 
