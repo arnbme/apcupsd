@@ -52,8 +52,8 @@ For Non-windows systems consider [Steve Wright's APC UPS Monitor Driver](https:/
   * commok - apcupsd UPS communication restored  
 * Sends UPS Device Statistics: every "user defined" minutes, using a repeating Windows Scheduled Task or optional EventGhost webserver plugin.
 * Support modules are Visual Basic Script
-* Executes without being logged in to Windows when using Windows Task Scheduler for triggering device statistics
-* Remotely reboot Windows machine from HE
+* Executes without being logged in to Windows
+* Remotely reboot Windows machine from HE (Optional requires EventGhost)
 
 [:arrow_up_small: Back to top](#top)
 <a name="support"></a>
@@ -275,6 +275,14 @@ Note: Event based Hub shutdown works without EventGhost. However, EventGhost or 
 11. Script smartUPS.vbs should run
 12. Click the refresh button in the SmartUPS device page
 13. The script should run
+14. **Setup EventGhost to run without a login**
+     * Use directions in Section 9 above to create a new Windows Scheduled Task
+     * 2 Name Start EventGhost
+     * 3 Triggers: At startup plus 2 minutes, no repeats
+     * 4 Action: "C:\Program Files\EventGhost\EventGhost.exe"
+     * 5, 6, 7 Same. 
+     * Save task. Reboot, wait 2 minutes, test by using another device to issue the Refresh command
+     * Note adjust 2 minute timer value based upon elapsed time for windows startup
 14. **Setup Windows Reboot Macro**
      * [shutdown.exe documentation](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/shutdown)
 6.  Highlight the SmartUPS folder, then Add a Macro in the newly created folder
