@@ -231,6 +231,11 @@ Note: Event based Hub shutdown works without the scheduled task. However, the Wi
    -----------
 5. Set Conditions
    * Uncheck Start the task only if computer is on AC power
+   -----------
+5. Set Settings
+   * Set "If task fails. restart every" to 5 Minutes
+   * Set "Repeats" to 999
+   * Uncheck "Stop task if runs longer than"
    ------------
 6. Save then test the Task   
    * Click OK on bottom of window
