@@ -13,6 +13,7 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *	The following changes by Arn Burkhoff
+ *  2020-11-17 V0.1.2 Add new attribute windowsBatteryPercent, requires version 0.0.4 of smartups.vbs 
  *  2020-10-11 V0.1.1 Add initialize() command and capability to restart polling on HUB reboot. 
  *								rename existing initialize command to settingsInitialize
  *  2020-10-10 V0.1.0 Add command to reboot the Windows machine with EventGhost command rebootWindows
@@ -71,6 +72,7 @@ metadata
 		attribute "lastPowerFailReason", "string"
 		attribute "batteryRuntime", "string"
 		attribute "lastEvent", "string"
+		attribute "windowsBatteryPercent", "number"
         
 		command "refresh"
 		command "rebootWindows"
@@ -242,6 +244,7 @@ def updatePowerStatus(status)
 def updateDeviceStatus(data)
 {
 	def power = 0
+	def winBattery = 100
 	def timeLeft = Math.round(Float.parseFloat(data.timeleft.replace(" Minutes", "")))
 	def battery = Math.round(Float.parseFloat(data.bcharge.replace(" Percent", "")))
 	def voltage = Float.parseFloat(data.linev.replace(" Volts", ""))
@@ -250,20 +253,22 @@ def updateDeviceStatus(data)
 	def highTransVolts = Float.parseFloat(data.hitrans.replace(" Volts", ""))
 	def loadPercent = Float.parseFloat(data.loadpct.replace(" Percent", ""))
     def nomPower = Float.parseFloat(data.nompower.replace(" Watts", ""))
+	if (data?.windowsbatterypercent)
+	    winBattery = Math.round(Float.parseFloat(data.windowsbatterypercent))
 	def powerSource =
     	data.status == "ONLINE" ? "mains" : 
         	data.status == "ONBATT" ? "battery" : 
             	"mains"
 
-//	update lastEvent as necessary
-	def lastEvent
+//	update lastEvent as necessary Killed in V004
+/*	def lastEvent
 	if (powerSource=='mains')
 		lastEvent = 'offbattery'
 	else
 		lastEvent = 'onbattery'
 	if (lastEvent != device.currentValue('lastEvent'))	
 		sendEvent(name: "lastEvent", value: lastEvent)
-
+*/
 	// Calculate wattage as a percentage of nominal load
     power = ((loadPercent / 100) * nomPower)
     
@@ -289,6 +294,7 @@ def updateDeviceStatus(data)
 	sendEvent(name: "lastPowerFail", value: data.xonbatt, displayed: this.currentNomPower != data.xonbatt ? true : false)
 	sendEvent(name: "lastPowerRestore", value: data.xoffbatt, displayed: this.currentPower != data.xoffbatt ? true : false)
 	sendEvent(name: "lastPowerFailReason", value: data.lastxfer, displayed: this.currentLastPowerFailReason != data.lastxfer ? true : false)
+	sendEvent(name: "windowsBatteryPercent", value: winBattery)
 }
 
 

@@ -1,10 +1,10 @@
-' This is pure alpha code
-'///Windows testing: open a command window: winkey + R, enter Cmd, then execute: cscript C:"\apcupsd\etc\apcupsd\smartUPS.vbs ///
+' V004 2020/11/16 add windows battery percentage
+'///Windows testing: open a command window: winkey + R, enter Cmd, then execute: cscript C:\apcupsd\etc\apcupsd\smartUPS.vbs ///
 '///This script also sends the onbattery, offbattery and powerout events
 '///Testing apcaccess: C:\apcupsd\bin\apcaccess.exe
 ' You MUST change IP address to your hub IP address, leave the port as 39501	
 
-hubitatHubIp = "http://192.168.0.106:39501/notify"				'///adjust IP address for your system
+hubitatHubIp = "http://192.168.0.106:39501/notify"				'///change to the IP address of your hub
 
 if WScript.Arguments.Count = 0 then
 	'///Comment out the next line when testing, then change back when done. ///
@@ -36,6 +36,7 @@ if WScript.Arguments.Count = 0 then
 	End Select
 	'/// format into JSON data no VBS methods AFAIK 
 	strJSONToSend = "{""data"":{""device"":{"
+
 	a=Split(strOutput,vbCrLf)
 	For each x in a
 		if (x>"    ") then
@@ -43,6 +44,14 @@ if WScript.Arguments.Count = 0 then
 			strJSONToSend = strJSONToSend + """"+LCase(trim(mySplit(0)))+""":"""+trim(mySplit(1))+""","
 		End if
 	next
+
+	'/// Get windows battery percentage V004
+	strComputer = "."
+	Set objWMIService = GetObject("winmgmts:\\" & strComputer & "\root\cimv2")
+	Set colItems = objWMIService.ExecQuery("Select * from Win32_Battery",,48)
+	For Each objItem in colItems
+		strJSONToSend = strJSONToSend & """"&"windowsbatterypercent"&""":"""&objItem.EstimatedChargeRemaining&""","
+	Next
 
 	'//Remove trailing comma and close out string
 	strJSONToSend = Left(strJSONToSend, Len(strJSONToSend) - 1) +"}}}"
