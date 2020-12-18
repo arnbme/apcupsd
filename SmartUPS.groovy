@@ -13,6 +13,7 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *	The following changes by Arn Burkhoff
+ *  2020-12-18 V0.1.3 lastEvent does not refresh on Windows restart, stays stuck on commlost 
  *  2020-11-17 V0.1.2 Add new attribute windowsBatteryPercent, requires version 0.0.4 of smartups.vbs 
  *  2020-10-11 V0.1.1 Add initialize() command and capability to restart polling on HUB reboot. 
  *								rename existing initialize command to settingsInitialize
@@ -260,15 +261,13 @@ def updateDeviceStatus(data)
         	data.status == "ONBATT" ? "battery" : 
             	"mains"
 
-//	update lastEvent as necessary Killed in V004
-/*	def lastEvent
-	if (powerSource=='mains')
-		lastEvent = 'offbattery'
+//	update lastEvent as necessary Updated in V013
+	if (powerSource=='mains' && this.lastEvent != 'offBattery') 
+		sendEvent(name: "lastEvent", value: "offbattery")
 	else
-		lastEvent = 'onbattery'
-	if (lastEvent != device.currentValue('lastEvent'))	
-		sendEvent(name: "lastEvent", value: lastEvent)
-*/
+	if (this.lastEvent == 'offbattery') 
+		sendEvent(name: "lastEvent", value: "onbattery")
+
 	// Calculate wattage as a percentage of nominal load
     power = ((loadPercent / 100) * nomPower)
     
