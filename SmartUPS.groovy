@@ -13,6 +13,8 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *	The following changes by Arn Burkhoff
+ *  2022-06-20 V0.1.4  Fix error introduced in V008: when status not ONLINE device update messages were not processed. 
+ *								Modify logic correcting this error: executes updateDeviceStatsus when json?.data?.device.timeleft exists
  *  2020-12-18 V0.1.3 lastEvent does not refresh on Windows restart, stays stuck on commlost 
  *  2020-11-17 V0.1.2 Add new attribute windowsBatteryPercent, requires version 0.0.4 of smartups.vbs 
  *  2020-10-11 V0.1.1 Add initialize() command and capability to restart polling on HUB reboot. 
@@ -192,20 +194,19 @@ def parse(String description)
         if (json?.data?.event)
 		{
 			log.info "SmartUPS Push notification for UPS event [${json?.data?.event}] detected."
-			
-			// Update the child device if it's monitored
 			updatePowerStatus(json.data.event)
 		}
 		// Response to a getUPSstatus call
 		else if (json?.data?.device)
 		{
 			if (enableDebug) log.info "Device update received."
-			if (json.data.device.status == 'ONLINE')
-				updateDeviceStatus(json.data.device)
-			else
+			if (json?.data?.device.timeleft)			
+				updateDeviceStatus(json.data.device)	
+			if (json.data.device.status != 'ONLINE')
 				{
-				sendEvent(name: "lastEvent", value: json.data.device.status)
 				log.warn "SmartUPS ${json.data.device.upsname} driver is ${json.data.device.status}"
+				if (json.data.device.status != 'ONBATT')
+					sendEvent(name: "lastEvent", value: json.data.device.status)
 				}
 		}
 		else log.error "SmartUPS ABORTING DUE TO UNKNOWN EVENT"
@@ -233,6 +234,8 @@ def updatePowerStatus(status)
 		}
 	sendEvent(name: "lastEvent", value: status)
 	sendEvent(name: "powerSource", value: powerSource)
+	sendEvent(name: "upsStatus", value: status.toLowerCase(), displayed: this.currentUpsStatus != status ? true : false)
+
     
     if (powerSource == "mains") sendEvent(name: "sessionStatus", value: "stopped", displayed: this.currentSessionStatus != sessionStatus ? true : false)
     else if (powerSource == "battery") sendEvent(name: "sessionStatus", value: "running", displayed: this.currentSessionStatus != sessionStatus ? true : false)
