@@ -251,7 +251,9 @@ Note: Event based Hub shutdown works without the scheduled task. However, the Wi
 ## 10. Install EventGhost
 Note: Event based Hub shutdown works without EventGhost. However, EventGhost or the Windows Scheduled Task is required should you want to shutdown the HUB based upon battery percentage or other UPS status fields, or want UPS statistics displayed in the driver. 
 
-1.  Install [EventGhost](http://www.eventghost.net)
+1.  Install [EventGhost](https://github.com/EventGhost/EventGhost/releases/tag/v0.5.0-rc6)
+April 30, 2023 The EventGost website is gone. Install by downloading then executing the setup.exe file from the Github repository link above
+
 
 2.  Activate the Webserver plugin
      * Highlight Autostart, right click Add Plugin, select webserver
