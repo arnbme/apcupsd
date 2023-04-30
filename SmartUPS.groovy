@@ -13,32 +13,33 @@
  *  for the specific language governing permissions and limitations under the License.
  *
  *	The following changes by Arn Burkhoff
- *  2022-06-20 V0.1.4  Fix error introduced in V008: when status not ONLINE device update messages were not processed. 
+ *  2023-04-30 V0.1.4 Killed code that changed the mac address and wiped out the device network id (kept same version)
+ *  2022-06-20 V0.1.4  Fix error introduced in V008: when status not ONLINE device update messages were not processed.
  *								Modify logic correcting this error: executes updateDeviceStatsus when json?.data?.device.timeleft exists
- *  2020-12-18 V0.1.3 lastEvent does not refresh on Windows restart, stays stuck on commlost 
- *  2020-11-17 V0.1.2 Add new attribute windowsBatteryPercent, requires version 0.0.4 of smartups.vbs 
- *  2020-10-11 V0.1.1 Add initialize() command and capability to restart polling on HUB reboot. 
+ *  2020-12-18 V0.1.3 lastEvent does not refresh on Windows restart, stays stuck on commlost
+ *  2020-11-17 V0.1.2 Add new attribute windowsBatteryPercent, requires version 0.0.4 of smartups.vbs
+ *  2020-10-11 V0.1.1 Add initialize() command and capability to restart polling on HUB reboot.
  *								rename existing initialize command to settingsInitialize
  *  2020-10-10 V0.1.0 Add command to reboot the Windows machine with EventGhost command rebootWindows
  *  2020-10-09 V0.0.9 Add support for any event including newly added commfailure.vbs, sends event as COMMLOST, and commok.vbs
  *  2020-10-08 V0.0.8 Errors logged in hubitat log when apcupsd status was COMMLOST. Windows app apcupsd somehow loses contact UPS device
  *							   Resolution: When device response is not ONLINE, update attribute lastEvent to json.data.device.status and issue a log.warn
- *                            Consider triggering a windows restart command or VBS script after nn (user provided) bad responses 
+ *                            Consider triggering a windows restart command or VBS script after nn (user provided) bad responses
  *
  *								 Option Explicit
  *								 Dim objShell
  *								 Set objShell = WScript.CreateObject("WScript.Shell")
  *								objShell.Run "C:\WINDOWS\system32\shutdown.exe -r -t 0"
- * 
+ *
  *  2020-09-29 V0.0.7 Enable Refresh command by using EventGhost on Windows to run smartUPS.vbs. Readme document has setup instructions
  *	                           add setting for the port number to use something other than 80 when another server runs on the windows machine
- *                            add settings EventGhost rerfresh timing in minutes, eliminating need for windows task scheduler								
- *  2020-09-26 V0.0.6 Update lastEvent on Device status update, add doshutdown event, default unknown event power to battery  
- *  2020-09-24 V0.0.5 Change namespace to arnbme  
- *  2020-09-23 V0.0.4 Adjust setings positions and text  
+ *                            add settings EventGhost rerfresh timing in minutes, eliminating need for windows task scheduler
+ *  2020-09-26 V0.0.6 Update lastEvent on Device status update, add doshutdown event, default unknown event power to battery
+ *  2020-09-24 V0.0.5 Change namespace to arnbme
+ *  2020-09-23 V0.0.4 Adjust setings positions and text
  *  2020-09-22 V0.0.3 Add support for UPS "failing" event, UPS is about to shut down, add attribute lastEvent and store last event status
- *  2020-09-21 V0.0.2 Add input setting for using VBS modules in windows 
- *                            Mostly informational for user, but cannot at this time send command to hub for info			
+ *  2020-09-21 V0.0.2 Add input setting for using VBS modules in windows
+ *                            Mostly informational for user, but cannot at this time send command to hub for info
  *  2020-09-19 V0.0.1 Add support for direct send of VBS scripts from Windows apcupsd trigger scripts eliminating need for a Windows PHP server
  *                            add log.error when message is not accepted.
  *                            Note VBS wont send Referer header. Accept a VBReferer header
@@ -55,7 +56,7 @@ metadata
 //		capability "Timed Session"
 		capability "Refresh"
 		capability "Initialize"
-		
+
 		attribute "loadPercent", "string"
         attribute "model", "string"
 		attribute "serial", "string"
@@ -76,24 +77,24 @@ metadata
 		attribute "batteryRuntime", "string"
 		attribute "lastEvent", "string"
 		attribute "windowsBatteryPercent", "number"
-        
+
 		command "refresh"
 		command "rebootWindows"
 	}
 
 	preferences
-	{	
+	{
 		section("Device")
 		{
-			input("ip", "string", title:"IP Address of apcupsd host system (Windows computer)", defaultValue: "192.168.nnn.nnn" ,required: true)		
-			input("port", "number", title:"Port Number used by optional Windows EventGhost web server", defaultValue: 80, range: 1..65535, required: true)		
+			input("ip", "string", title:"IP Address of apcupsd host system (Windows computer)", defaultValue: "192.168.nnn.nnn" ,required: true)
+			input("port", "number", title:"Port Number used by optional Windows EventGhost web server", defaultValue: 80, range: 1..65535, required: true)
 		}
 		section
 		{
 			input "prefEventGhost", "bool", required: true, defaultValue: false,
 				title: "ON: EventGhost is installed on Windows, enables commands Refresh and rebootWindows, and optional Hub controlled statistics updates<br />OFF (Default): Use Windows Task Scheduler for statistics, Refresh command disabled"
 			if (prefEventGhost)
-				input("prefRefreshMinutes", "number", title:"EventGhost update time in minutes, zero disables EventGhost updates, however Refresh is active. When using Windows Scheduler for updates, set to 0", defaultValue: 5, range: 0..20, required: true)		
+				input("prefRefreshMinutes", "number", title:"EventGhost update time in minutes, zero disables EventGhost updates, however Refresh is active. When using Windows Scheduler for updates, set to 0", defaultValue: 5, range: 0..20, required: true)
 		}
 		section
 		{
@@ -149,14 +150,14 @@ def refresh()
 	if (settings.prefEventGhost)
 		{
 		def egCommand = java.net.URLEncoder.encode("HE.smartUPS")
-		def egHost = "${settings.ip}:${settings.port}" 
+		def egHost = "${settings.ip}:${settings.port}"
 		if (enableDebug) log.debug "Sending Refresh to Windows EventGhost at $egHost"
 		sendHubCommand(new hubitat.device.HubAction("""GET /?$egCommand HTTP/1.1\r\nHOST: $egHost\r\n\r\n""", hubitat.device.Protocol.LAN))
 		if (prefRefreshMinutes && prefRefreshMinutes > 0)
 			{
 			if (enableDebug) log.debug "Refresh scheduled $prefRefreshMinutes ${prefRefreshMinutes * 60}"
 			unschedule(refresh)
-			runIn(prefRefreshMinutes*60, refresh) 
+			runIn(prefRefreshMinutes*60, refresh)
 
 			}
 		}
@@ -166,7 +167,7 @@ def rebootWindows()
 	{
 	log.warn "SmartUPS rebootWindows command entered"
 	def egCommand = java.net.URLEncoder.encode("HE.rebootWindows")
-	def egHost = "${settings.ip}:${settings.port}" 
+	def egHost = "${settings.ip}:${settings.port}"
 	sendHubCommand(new hubitat.device.HubAction("""GET /?$egCommand HTTP/1.1\r\nHOST: $egHost\r\n\r\n""", hubitat.device.Protocol.LAN))
 	}
 
@@ -175,13 +176,13 @@ def parse(String description)
 {
 	def msg = parseLanMessage(description)
 	if (enableDebug) log.debug "PARSED LAN EVENT Received: " + msg
-	
-	// Update DNI if changed
-	if (msg?.mac && msg.mac != device.deviceNetworkId)
-	{
-		if (enableDebug) log.debug "Updating DNI to MAC ${msg.mac}..."
-		device.deviceNetworkId = msg.mac
-	}
+
+	// Update DNI if changed Killed Apr 30, 2023
+//	if (msg?.mac && msg.mac != device.deviceNetworkId)
+//	{
+//		if (enableDebug) log.debug "Updating DNI to MAC ${msg.mac}..."
+//			device.deviceNetworkId = msg.mac
+//	}
 	// Response to a push notification
 	if ((msg?.headers?.Referer == "apcupsd" || msg?.headers?.VBReferer == "apcupsd") && msg?.body)
     {
@@ -200,8 +201,8 @@ def parse(String description)
 		else if (json?.data?.device)
 		{
 			if (enableDebug) log.info "Device update received."
-			if (json?.data?.device.timeleft)			
-				updateDeviceStatus(json.data.device)	
+			if (json?.data?.device.timeleft)
+				updateDeviceStatus(json.data.device)
 			if (json.data.device.status != 'ONLINE')
 				{
 				log.warn "SmartUPS ${json.data.device.upsname} driver is ${json.data.device.status}"
@@ -212,7 +213,7 @@ def parse(String description)
 		else log.error "SmartUPS ABORTING DUE TO UNKNOWN EVENT"
 	}
     else
-        if (enableDebug) log.error "SmartUps Unknown message received Referer:${msg?.headers?.Referer}  VBReferer:${msg?.headers?.VBReferer} body: ${msg?.body}" 
+        if (enableDebug) log.error "SmartUps Unknown message received Referer:${msg?.headers?.Referer}  VBReferer:${msg?.headers?.VBReferer} body: ${msg?.body}"
 }
 
 
@@ -236,7 +237,7 @@ def updatePowerStatus(status)
 	sendEvent(name: "powerSource", value: powerSource)
 	sendEvent(name: "upsStatus", value: status.toLowerCase(), displayed: this.currentUpsStatus != status ? true : false)
 
-    
+
     if (powerSource == "mains") sendEvent(name: "sessionStatus", value: "stopped", displayed: this.currentSessionStatus != sessionStatus ? true : false)
     else if (powerSource == "battery") sendEvent(name: "sessionStatus", value: "running", displayed: this.currentSessionStatus != sessionStatus ? true : false)
 
@@ -260,22 +261,22 @@ def updateDeviceStatus(data)
 	if (data?.windowsbatterypercent)
 	    winBattery = Math.round(Float.parseFloat(data.windowsbatterypercent))
 	def powerSource =
-    	data.status == "ONLINE" ? "mains" : 
-        	data.status == "ONBATT" ? "battery" : 
+    	data.status == "ONLINE" ? "mains" :
+        	data.status == "ONBATT" ? "battery" :
             	"mains"
 
 //	update lastEvent as necessary Updated in V013
-	if (powerSource=='mains' && this.lastEvent != 'offBattery') 
+	if (powerSource=='mains' && this.lastEvent != 'offBattery')
 		sendEvent(name: "lastEvent", value: "offbattery")
 	else
-	if (this.lastEvent == 'offbattery') 
+	if (this.lastEvent == 'offbattery')
 		sendEvent(name: "lastEvent", value: "onbattery")
 
 	// Calculate wattage as a percentage of nominal load
     power = ((loadPercent / 100) * nomPower)
-    
+
 	sendEvent(name: "powerSource", value: powerSource, displayed: this.currentPowerSource != powerSource ? true : false)
-	sendEvent(name: "timeRemaining", value: timeLeft, displayed: false)  
+	sendEvent(name: "timeRemaining", value: timeLeft, displayed: false)
 	sendEvent(name: "upsStatus", value: data.status.toLowerCase(), displayed: this.currentUpsStatus != data.status ? true : false)
 	sendEvent(name: "model", value: data.model, displayed: this.currentModel != data.model ? true : false)
 	sendEvent(name: "serial", value: data.serialno, displayed: this.currentSerial != data.serialno ? true : false)
@@ -302,7 +303,7 @@ def updateDeviceStatus(data)
 
 /*
 	logsOff
-    
+
 	Disables debug logging.
 */
 def logsOff()
